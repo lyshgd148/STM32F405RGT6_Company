@@ -188,6 +188,7 @@ int main(void)
 		HAL_Delay(500);
 		
 		Sys_Run(tray_num-1);
+		SetTextInt32(0,23,0,0,2);
 		HAL_Delay(2500);
 		if(tray_num != 1)
 			motor_AllGoHome();

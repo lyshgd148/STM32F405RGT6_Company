@@ -3,7 +3,7 @@
 <title>Static Call Graph - [6-HMI\6-HMI.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image 6-HMI\6-HMI.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5050106: Last Updated: Fri Aug 01 11:01:16 2025
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5050106: Last Updated: Fri Aug 01 11:42:50 2025
 <BR><P>
 <H3>Maximum Stack Usage =        296 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -700,7 +700,6 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetTick
 </UL>
 <BR>[Called By]<UL><LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;motor_AllGoHome
-<LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Sys_Run
 <LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MyGetTextValue
 <LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 <LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Run
@@ -1246,11 +1245,11 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit
 </UL>
-<BR>[Called By]<UL><LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetButtonValue
+<BR>[Called By]<UL><LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetTextInt32
+<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetButtonValue
 <LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MySetIcon
 <LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetScreen
 <LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetControlValue
-<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetTextInt32
 </UL>
 
 <P><STRONG><a name="[da]"></a>SetButtonValue</STRONG> (Thumb, 84 bytes, Stack size 16 bytes, hmi_driver.o(i.SetButtonValue))
@@ -1275,6 +1274,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SendChar
 </UL>
 <BR>[Called By]<UL><LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Sys_Run
+<LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
 <P><STRONG><a name="[9]"></a>SysTick_Handler</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, stm32f4xx_it.o(i.SysTick_Handler))
@@ -1282,11 +1282,10 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f405xx.o(RESET)
 </UL>
-<P><STRONG><a name="[dd]"></a>Sys_Run</STRONG> (Thumb, 40 bytes, Stack size 16 bytes, motor.o(i.Sys_Run))
-<BR><BR>[Stack]<UL><LI>Max Depth = 172<LI>Call Chain = Sys_Run &rArr; Run &rArr; PutDownMaterial &rArr; MoveSecondGMotors &rArr; motorGoPosition &rArr; CAN1_Send_Msg &rArr; HAL_CAN_AddTxMessage
+<P><STRONG><a name="[dd]"></a>Sys_Run</STRONG> (Thumb, 42 bytes, Stack size 24 bytes, motor.o(i.Sys_Run))
+<BR><BR>[Stack]<UL><LI>Max Depth = 180<LI>Call Chain = Sys_Run &rArr; Run &rArr; PutDownMaterial &rArr; MoveSecondGMotors &rArr; motorGoPosition &rArr; CAN1_Send_Msg &rArr; HAL_CAN_AddTxMessage
 </UL>
-<BR>[Calls]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
-<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetTextInt32
+<BR>[Calls]<UL><LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetTextInt32
 <LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Run
 </UL>
 <BR>[Called By]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
@@ -1381,13 +1380,14 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_RxFifo0MsgPendingCallback
 </UL>
 
-<P><STRONG><a name="[58]"></a>main</STRONG> (Thumb, 562 bytes, Stack size 0 bytes, main.o(i.main))
-<BR><BR>[Stack]<UL><LI>Max Depth = 172<LI>Call Chain = main &rArr; Sys_Run &rArr; Run &rArr; PutDownMaterial &rArr; MoveSecondGMotors &rArr; motorGoPosition &rArr; CAN1_Send_Msg &rArr; HAL_CAN_AddTxMessage
+<P><STRONG><a name="[58]"></a>main</STRONG> (Thumb, 580 bytes, Stack size 8 bytes, main.o(i.main))
+<BR><BR>[Stack]<UL><LI>Max Depth = 188<LI>Call Chain = main &rArr; Sys_Run &rArr; Run &rArr; PutDownMaterial &rArr; MoveSecondGMotors &rArr; motorGoPosition &rArr; CAN1_Send_Msg &rArr; HAL_CAN_AddTxMessage
 </UL>
 <BR>[Calls]<UL><LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;queue_reset
 <LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;motor_AllGoHome
 <LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;motorGoHome
 <LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Sys_Run
+<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetTextInt32
 <LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetButtonValue
 <LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MySetIcon
 <LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MyGetTextValue

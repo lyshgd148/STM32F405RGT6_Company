@@ -632,9 +632,11 @@ void Sys_Run(uint8_t stratnum)
 	uint32_t i;
 	for (i = stratnum; i >= 1; i--)
 	{
-		SetTextInt32(0,23,i-1,0,2);
-		Run(i);
-		HAL_Delay(100);
+		if(updateFlag ==1)
+		{
+			SetTextInt32(0,23,i-1,0,2);
+			Run(i);
+		}
 	}
 	
 }
