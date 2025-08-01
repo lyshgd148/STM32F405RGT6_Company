@@ -116,44 +116,66 @@ int main(void)
 		while(updateFlag!=1)
 		{
 			#if dbg
-				if(state_dbg==1 || state_dbg==3 )
+				if(state_dbg==1 || state_dbg==3)
 				{
-					if(motor_statuses[4].is_reach ==1)
+					MoveFifthMotor(1000, 100,heigh_dbg*16384/lead_screw);
+					while(motor_statuses[4].is_reach ==0)
 					{
-						motor_statuses[4].is_reach =0;
-						state_dbg=0;
+							HAL_Delay(100);
 					}
+					motor_statuses[4].is_reach =0;
+					state_dbg=0;
 				}
 				else if(state_dbg==2)
 				{
-					if(motor_statuses[0].is_reach ==1 && motor_statuses[1].is_reach ==1 && motor_statuses[2].is_reach ==1 && motor_statuses[3].is_reach ==1 &&motor_statuses[4].is_reach ==1)
+					motorGoHome(1);
+					motorGoHome(2);
+					while(motor_statuses[0].is_reach ==0 && motor_statuses[1].is_reach ==0)
 					{
-						motor_statuses[0].is_reach =0; 
-						motor_statuses[1].is_reach =0; 
-						motor_statuses[2].is_reach =0;
-						motor_statuses[3].is_reach =0;
-						motor_statuses[4].is_reach =0;
-						heigh_dbg=0;
-						state_dbg=0;
+						HAL_Delay(100);
 					}
+					motor_statuses[0].is_reach =0; 
+					motor_statuses[1].is_reach =0; 
+					
+					motorGoHome(3);
+					motorGoHome(4);
+					motorGoHome(5);
+					while(motor_statuses[2].is_reach ==0 && motor_statuses[3].is_reach ==0 && motor_statuses[4].is_reach ==0)
+					{
+						HAL_Delay(100);
+					}
+					motor_statuses[2].is_reach =0;
+					motor_statuses[3].is_reach =0;
+					motor_statuses[4].is_reach =0;
+					
+					firstFlag_dgb=0;
+					secondFlag_dgb=0;
+					heigh_dbg=0;
+					state_dbg=0;
 				}
 				else if(state_dbg==4)
 				{
-					if(motor_statuses[0].is_reach ==1 && motor_statuses[1].is_reach ==1)
+					MoveFirstGMotors(firstFlag_dgb%2,500,50);
+					while(motor_statuses[0].is_reach ==0 && motor_statuses[1].is_reach ==0)
 					{
-						motor_statuses[0].is_reach =0;
-						motor_statuses[1].is_reach =0;
-						state_dbg=0;
+							HAL_Delay(100);
 					}
+					motor_statuses[0].is_reach =0;
+					motor_statuses[1].is_reach =0;
+					firstFlag_dgb++;
+					state_dbg=0;
 				}
 				else if(state_dbg==5)
 				{
-					if(motor_statuses[2].is_reach ==1 && motor_statuses[3].is_reach ==1)
+					MoveSecondGMotors(secondFlag_dgb%2,500,50);					
+					while(motor_statuses[2].is_reach ==0 && motor_statuses[3].is_reach ==0)
 					{
-						motor_statuses[2].is_reach =0; 
-						motor_statuses[3].is_reach =0;
-						state_dbg=0;
+						HAL_Delay(100);
 					}
+					motor_statuses[2].is_reach =0; 
+					motor_statuses[3].is_reach =0;
+					secondFlag_dgb++;
+					state_dbg=0;
 				}	
 			#endif
 			HAL_GPIO_TogglePin(LED3_GPIO_Port, LED3_Pin);

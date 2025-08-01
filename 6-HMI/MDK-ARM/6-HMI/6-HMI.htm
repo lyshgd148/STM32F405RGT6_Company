@@ -3,7 +3,7 @@
 <title>Static Call Graph - [6-HMI\6-HMI.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image 6-HMI\6-HMI.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5050106: Last Updated: Fri Aug 01 09:31:58 2025
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5050106: Last Updated: Fri Aug 01 10:41:09 2025
 <BR><P>
 <H3>Maximum Stack Usage =        296 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -397,7 +397,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_MspInit
 <LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_MspInit
 <LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_GPIO_Init
-<LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SystemClock_Config
+<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SystemClock_Config
 <LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Position_Init
 </UL>
 
@@ -412,7 +412,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__vfscanf_char
 </UL>
-<BR>[Called By]<UL><LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NotifyText
+<BR>[Called By]<UL><LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NotifyText
 </UL>
 
 <P><STRONG><a name="[6a]"></a>_scanf_int</STRONG> (Thumb, 332 bytes, Stack size 56 bytes, _scanf_int.o(.text))
@@ -509,9 +509,9 @@ Global Symbols
 <LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_AddTxMessage
 <LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;canCRC_ATM
 </UL>
-<BR>[Called By]<UL><LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;motor_Stop
+<BR>[Called By]<UL><LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;motorGoHome
+<LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;motor_Stop
 <LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;motorGoPosition
-<LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;motorGoHome
 </UL>
 
 <P><STRONG><a name="[7]"></a>DebugMon_Handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f4xx_it.o(i.DebugMon_Handler))
@@ -543,12 +543,12 @@ Global Symbols
 <P><STRONG><a name="[7b]"></a>GetMaterial</STRONG> (Thumb, 402 bytes, Stack size 40 bytes, motor.o(i.GetMaterial))
 <BR><BR>[Stack]<UL><LI>Max Depth = 132<LI>Call Chain = GetMaterial &rArr; MoveFirstGMotors &rArr; motorGoPosition &rArr; CAN1_Send_Msg &rArr; HAL_CAN_AddTxMessage
 </UL>
-<BR>[Calls]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
-<LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;motor_Stop
-<LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MoveFirstGMotors
+<BR>[Calls]<UL><LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MoveFirstGMotors
 <LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MoveFifthMotor
+<LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
+<LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;motor_Stop
 </UL>
-<BR>[Called By]<UL><LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Run
+<BR>[Called By]<UL><LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Run
 </UL>
 
 <P><STRONG><a name="[72]"></a>HAL_CAN_ActivateNotification</STRONG> (Thumb, 36 bytes, Stack size 0 bytes, stm32f4xx_hal_can.o(i.HAL_CAN_ActivateNotification))
@@ -699,12 +699,12 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetTick
 </UL>
-<BR>[Called By]<UL><LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;motor_AllGoHome
-<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Sys_Run
+<BR>[Called By]<UL><LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;motor_AllGoHome
+<LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Sys_Run
 <LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MyGetTextValue
 <LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Run
-<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutDownMaterial
+<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Run
+<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutDownMaterial
 <LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IO_Tran
 <LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetMaterial
 </UL>
@@ -745,7 +745,6 @@ Global Symbols
 <P><STRONG><a name="[c6]"></a>HAL_GPIO_WritePin</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, stm32f4xx_hal_gpio.o(i.HAL_GPIO_WritePin))
 <BR><BR>[Called By]<UL><LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_GPIO_Init
 <LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-<LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NotifyButton
 <LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IO_Tran
 </UL>
 
@@ -761,7 +760,7 @@ Global Symbols
 <LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_WaitOnFlagUntilTimeout
 </UL>
 
-<P><STRONG><a name="[dd]"></a>HAL_IncTick</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, stm32f4xx_hal.o(i.HAL_IncTick))
+<P><STRONG><a name="[dc]"></a>HAL_IncTick</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, stm32f4xx_hal.o(i.HAL_IncTick))
 <BR><BR>[Called By]<UL><LI><a href="#[9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysTick_Handler
 </UL>
 
@@ -821,14 +820,14 @@ Global Symbols
 <LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_RCC_GetSysClockFreq
 <LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_InitTick
 </UL>
-<BR>[Called By]<UL><LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SystemClock_Config
+<BR>[Called By]<UL><LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SystemClock_Config
 </UL>
 
-<P><STRONG><a name="[e1]"></a>HAL_RCC_GetPCLK1Freq</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, stm32f4xx_hal_rcc.o(i.HAL_RCC_GetPCLK1Freq))
+<P><STRONG><a name="[e0]"></a>HAL_RCC_GetPCLK1Freq</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, stm32f4xx_hal_rcc.o(i.HAL_RCC_GetPCLK1Freq))
 <BR><BR>[Called By]<UL><LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_SetConfig
 </UL>
 
-<P><STRONG><a name="[e0]"></a>HAL_RCC_GetPCLK2Freq</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, stm32f4xx_hal_rcc.o(i.HAL_RCC_GetPCLK2Freq))
+<P><STRONG><a name="[df]"></a>HAL_RCC_GetPCLK2Freq</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, stm32f4xx_hal_rcc.o(i.HAL_RCC_GetPCLK2Freq))
 <BR><BR>[Called By]<UL><LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_SetConfig
 </UL>
 
@@ -845,7 +844,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetTick
 </UL>
-<BR>[Called By]<UL><LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SystemClock_Config
+<BR>[Called By]<UL><LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SystemClock_Config
 </UL>
 
 <P><STRONG><a name="[9d]"></a>HAL_SYSTICK_Config</STRONG> (Thumb, 40 bytes, Stack size 8 bytes, stm32f4xx_hal_cortex.o(i.HAL_SYSTICK_Config))
@@ -892,7 +891,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_Base_Init
 </UL>
 
-<P><STRONG><a name="[e4]"></a>HAL_TIM_Base_Start_IT</STRONG> (Thumb, 100 bytes, Stack size 0 bytes, stm32f4xx_hal_tim.o(i.HAL_TIM_Base_Start_IT))
+<P><STRONG><a name="[e3]"></a>HAL_TIM_Base_Start_IT</STRONG> (Thumb, 100 bytes, Stack size 0 bytes, stm32f4xx_hal_tim.o(i.HAL_TIM_Base_Start_IT))
 <BR><BR>[Called By]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
@@ -1031,7 +1030,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_ReadPin
 </UL>
-<BR>[Called By]<UL><LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Run
+<BR>[Called By]<UL><LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Run
 </UL>
 
 <P><STRONG><a name="[c5]"></a>IO_Tran</STRONG> (Thumb, 34 bytes, Stack size 8 bytes, motor.o(i.IO_Tran))
@@ -1040,7 +1039,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
 <LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
 </UL>
-<BR>[Called By]<UL><LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Run
+<BR>[Called By]<UL><LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Run
 </UL>
 
 <P><STRONG><a name="[c7]"></a>MX_CAN1_Init</STRONG> (Thumb, 60 bytes, Stack size 8 bytes, can.o(i.MX_CAN1_Init))
@@ -1112,7 +1111,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f405xx.o(RESET)
 </UL>
-<P><STRONG><a name="[e5]"></a>Motor_Init</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, motor.o(i.Motor_Init))
+<P><STRONG><a name="[e4]"></a>Motor_Init</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, motor.o(i.Motor_Init))
 <BR><BR>[Called By]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
@@ -1121,8 +1120,8 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;motorGoPosition
 </UL>
-<BR>[Called By]<UL><LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NotifyButton
-<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutDownMaterial
+<BR>[Called By]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutDownMaterial
 <LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetMaterial
 </UL>
 
@@ -1131,8 +1130,8 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;motorGoPosition
 </UL>
-<BR>[Called By]<UL><LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NotifyButton
-<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutDownMaterial
+<BR>[Called By]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutDownMaterial
 <LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetMaterial
 </UL>
 
@@ -1141,8 +1140,8 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;motorGoPosition
 </UL>
-<BR>[Called By]<UL><LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NotifyButton
-<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutDownMaterial
+<BR>[Called By]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutDownMaterial
 </UL>
 
 <P><STRONG><a name="[d1]"></a>MyGetTextValue</STRONG> (Thumb, 56 bytes, Stack size 8 bytes, screen.o(i.MyGetTextValue))
@@ -1170,23 +1169,18 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f405xx.o(RESET)
 </UL>
-<P><STRONG><a name="[d2]"></a>NotifyButton</STRONG> (Thumb, 390 bytes, Stack size 40 bytes, screen.o(i.NotifyButton))
-<BR><BR>[Stack]<UL><LI>Max Depth = 140<LI>Call Chain = NotifyButton &rArr; MoveSecondGMotors &rArr; motorGoPosition &rArr; CAN1_Send_Msg &rArr; HAL_CAN_AddTxMessage
+<P><STRONG><a name="[d2]"></a>NotifyButton</STRONG> (Thumb, 240 bytes, Stack size 40 bytes, screen.o(i.NotifyButton))
+<BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = NotifyButton &rArr; Position_Init &rArr; PutDown_posInit
 </UL>
-<BR>[Calls]<UL><LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
-<LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;motorGoHome
-<LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Position_Init
-<LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MoveSecondGMotors
-<LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MoveFirstGMotors
-<LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MoveFifthMotor
+<BR>[Calls]<UL><LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Position_Init
 </UL>
 <BR>[Called By]<UL><LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ProcessMessage
 </UL>
 
-<P><STRONG><a name="[d5]"></a>NotifyText</STRONG> (Thumb, 348 bytes, Stack size 40 bytes, screen.o(i.NotifyText))
+<P><STRONG><a name="[d4]"></a>NotifyText</STRONG> (Thumb, 348 bytes, Stack size 40 bytes, screen.o(i.NotifyText))
 <BR><BR>[Stack]<UL><LI>Max Depth = 256<LI>Call Chain = NotifyText &rArr; __0sscanf &rArr; __vfscanf_char &rArr; __vfscanf &rArr; _scanf_int
 </UL>
-<BR>[Calls]<UL><LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetScreen
+<BR>[Calls]<UL><LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetScreen
 <LI><a href="#[68]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__0sscanf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ProcessMessage
@@ -1198,8 +1192,8 @@ Global Symbols
 <P><STRONG><a name="[d3]"></a>Position_Init</STRONG> (Thumb, 50 bytes, Stack size 24 bytes, motor.o(i.Position_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = Position_Init &rArr; PutDown_posInit
 </UL>
-<BR>[Calls]<UL><LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Tray_posInit
-<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutDown_posInit
+<BR>[Calls]<UL><LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Tray_posInit
+<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutDown_posInit
 <LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 </UL>
 <BR>[Called By]<UL><LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NotifyButton
@@ -1208,40 +1202,40 @@ Global Symbols
 <P><STRONG><a name="[b3]"></a>ProcessMessage</STRONG> (Thumb, 56 bytes, Stack size 8 bytes, screen.o(i.ProcessMessage))
 <BR><BR>[Stack]<UL><LI>Max Depth = 264<LI>Call Chain = ProcessMessage &rArr; NotifyText &rArr; __0sscanf &rArr; __vfscanf_char &rArr; __vfscanf &rArr; _scanf_int
 </UL>
-<BR>[Calls]<UL><LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NotifyText
+<BR>[Calls]<UL><LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NotifyText
 <LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NotifyButton
 </UL>
 <BR>[Called By]<UL><LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_PeriodElapsedCallback
 </UL>
 
-<P><STRONG><a name="[d9]"></a>PutDownMaterial</STRONG> (Thumb, 660 bytes, Stack size 40 bytes, motor.o(i.PutDownMaterial))
+<P><STRONG><a name="[d8]"></a>PutDownMaterial</STRONG> (Thumb, 660 bytes, Stack size 40 bytes, motor.o(i.PutDownMaterial))
 <BR><BR>[Stack]<UL><LI>Max Depth = 140<LI>Call Chain = PutDownMaterial &rArr; MoveSecondGMotors &rArr; motorGoPosition &rArr; CAN1_Send_Msg &rArr; HAL_CAN_AddTxMessage
 </UL>
-<BR>[Calls]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
-<LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;motor_Stop
-<LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MoveSecondGMotors
+<BR>[Calls]<UL><LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MoveSecondGMotors
 <LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MoveFirstGMotors
 <LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MoveFifthMotor
+<LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
+<LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;motor_Stop
 </UL>
-<BR>[Called By]<UL><LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Run
+<BR>[Called By]<UL><LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Run
 </UL>
 
-<P><STRONG><a name="[d8]"></a>PutDown_posInit</STRONG> (Thumb, 66 bytes, Stack size 16 bytes, motor.o(i.PutDown_posInit))
+<P><STRONG><a name="[d7]"></a>PutDown_posInit</STRONG> (Thumb, 66 bytes, Stack size 16 bytes, motor.o(i.PutDown_posInit))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = PutDown_posInit
 </UL>
 <BR>[Called By]<UL><LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Position_Init
 </UL>
 
-<P><STRONG><a name="[da]"></a>Run</STRONG> (Thumb, 144 bytes, Stack size 16 bytes, motor.o(i.Run))
+<P><STRONG><a name="[d9]"></a>Run</STRONG> (Thumb, 144 bytes, Stack size 16 bytes, motor.o(i.Run))
 <BR><BR>[Stack]<UL><LI>Max Depth = 156<LI>Call Chain = Run &rArr; PutDownMaterial &rArr; MoveSecondGMotors &rArr; motorGoPosition &rArr; CAN1_Send_Msg &rArr; HAL_CAN_AddTxMessage
 </UL>
 <BR>[Calls]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
-<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutDownMaterial
+<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutDownMaterial
 <LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IO_Tran
 <LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IO_Read
 <LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetMaterial
 </UL>
-<BR>[Called By]<UL><LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Sys_Run
+<BR>[Called By]<UL><LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Sys_Run
 </UL>
 
 <P><STRONG><a name="[6]"></a>SVC_Handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f4xx_it.o(i.SVC_Handler))
@@ -1252,14 +1246,14 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit
 </UL>
-<BR>[Called By]<UL><LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetButtonValue
+<BR>[Called By]<UL><LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetButtonValue
 <LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MySetIcon
-<LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetScreen
+<LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetScreen
 <LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetControlValue
-<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetTextInt32
+<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetTextInt32
 </UL>
 
-<P><STRONG><a name="[db]"></a>SetButtonValue</STRONG> (Thumb, 84 bytes, Stack size 16 bytes, hmi_driver.o(i.SetButtonValue))
+<P><STRONG><a name="[da]"></a>SetButtonValue</STRONG> (Thumb, 84 bytes, Stack size 16 bytes, hmi_driver.o(i.SetButtonValue))
 <BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = SetButtonValue &rArr; SendChar &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
 </UL>
 <BR>[Calls]<UL><LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SendChar
@@ -1267,38 +1261,38 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[d6]"></a>SetScreen</STRONG> (Thumb, 62 bytes, Stack size 8 bytes, hmi_driver.o(i.SetScreen))
+<P><STRONG><a name="[d5]"></a>SetScreen</STRONG> (Thumb, 62 bytes, Stack size 8 bytes, hmi_driver.o(i.SetScreen))
 <BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = SetScreen &rArr; SendChar &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
 </UL>
 <BR>[Calls]<UL><LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SendChar
 </UL>
-<BR>[Called By]<UL><LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NotifyText
+<BR>[Called By]<UL><LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NotifyText
 </UL>
 
-<P><STRONG><a name="[dc]"></a>SetTextInt32</STRONG> (Thumb, 138 bytes, Stack size 24 bytes, hmi_driver.o(i.SetTextInt32))
+<P><STRONG><a name="[db]"></a>SetTextInt32</STRONG> (Thumb, 138 bytes, Stack size 24 bytes, hmi_driver.o(i.SetTextInt32))
 <BR><BR>[Stack]<UL><LI>Max Depth = 96<LI>Call Chain = SetTextInt32 &rArr; SendChar &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
 </UL>
 <BR>[Calls]<UL><LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SendChar
 </UL>
-<BR>[Called By]<UL><LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Sys_Run
+<BR>[Called By]<UL><LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Sys_Run
 </UL>
 
 <P><STRONG><a name="[9]"></a>SysTick_Handler</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, stm32f4xx_it.o(i.SysTick_Handler))
-<BR><BR>[Calls]<UL><LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_IncTick
+<BR><BR>[Calls]<UL><LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_IncTick
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f405xx.o(RESET)
 </UL>
-<P><STRONG><a name="[de]"></a>Sys_Run</STRONG> (Thumb, 40 bytes, Stack size 16 bytes, motor.o(i.Sys_Run))
+<P><STRONG><a name="[dd]"></a>Sys_Run</STRONG> (Thumb, 40 bytes, Stack size 16 bytes, motor.o(i.Sys_Run))
 <BR><BR>[Stack]<UL><LI>Max Depth = 172<LI>Call Chain = Sys_Run &rArr; Run &rArr; PutDownMaterial &rArr; MoveSecondGMotors &rArr; motorGoPosition &rArr; CAN1_Send_Msg &rArr; HAL_CAN_AddTxMessage
 </UL>
 <BR>[Calls]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
-<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetTextInt32
-<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Run
+<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetTextInt32
+<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Run
 </UL>
 <BR>[Called By]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[df]"></a>SystemClock_Config</STRONG> (Thumb, 138 bytes, Stack size 88 bytes, main.o(i.SystemClock_Config))
+<P><STRONG><a name="[de]"></a>SystemClock_Config</STRONG> (Thumb, 138 bytes, Stack size 88 bytes, main.o(i.SystemClock_Config))
 <BR><BR>[Stack]<UL><LI>Max Depth = 168<LI>Call Chain = SystemClock_Config &rArr; HAL_RCC_ClockConfig &rArr; HAL_RCC_GetSysClockFreq &rArr; __aeabi_uldivmod
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_RCC_OscConfig
@@ -1344,7 +1338,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_ConfigClockSource
 </UL>
 
-<P><STRONG><a name="[d7]"></a>Tray_posInit</STRONG> (Thumb, 54 bytes, Stack size 12 bytes, motor.o(i.Tray_posInit))
+<P><STRONG><a name="[d6]"></a>Tray_posInit</STRONG> (Thumb, 54 bytes, Stack size 12 bytes, motor.o(i.Tray_posInit))
 <BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = Tray_posInit
 </UL>
 <BR>[Called By]<UL><LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Position_Init
@@ -1357,7 +1351,7 @@ Global Symbols
 <P><STRONG><a name="[30]"></a>USART2_IRQHandler</STRONG> (Thumb, 32 bytes, Stack size 8 bytes, stm32f4xx_it.o(i.USART2_IRQHandler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = USART2_IRQHandler &rArr; HAL_UART_IRQHandler &rArr; HAL_DMA_Abort
 </UL>
-<BR>[Calls]<UL><LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;queue_push
+<BR>[Calls]<UL><LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;queue_push
 <LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_IRQHandler
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f405xx.o(RESET)
@@ -1387,16 +1381,20 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_RxFifo0MsgPendingCallback
 </UL>
 
-<P><STRONG><a name="[58]"></a>main</STRONG> (Thumb, 376 bytes, Stack size 0 bytes, main.o(i.main))
+<P><STRONG><a name="[58]"></a>main</STRONG> (Thumb, 550 bytes, Stack size 0 bytes, main.o(i.main))
 <BR><BR>[Stack]<UL><LI>Max Depth = 172<LI>Call Chain = main &rArr; Sys_Run &rArr; Run &rArr; PutDownMaterial &rArr; MoveSecondGMotors &rArr; motorGoPosition &rArr; CAN1_Send_Msg &rArr; HAL_CAN_AddTxMessage
 </UL>
-<BR>[Calls]<UL><LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;queue_reset
-<LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;motor_AllGoHome
-<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Sys_Run
-<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetButtonValue
+<BR>[Calls]<UL><LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;queue_reset
+<LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;motor_AllGoHome
+<LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;motorGoHome
+<LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Sys_Run
+<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetButtonValue
 <LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MySetIcon
 <LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MyGetTextValue
-<LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Motor_Init
+<LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MoveSecondGMotors
+<LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MoveFirstGMotors
+<LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MoveFifthMotor
+<LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Motor_Init
 <LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_USART2_UART_Init
 <LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_TIM6_Init
 <LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_TIM3_Init
@@ -1404,23 +1402,23 @@ Global Symbols
 <LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_GPIO_Init
 <LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_CAN1_Init
 <LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Receive_IT
-<LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_Base_Start_IT
+<LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_Base_Start_IT
 <LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Init
 <LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
 <LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_TogglePin
 <LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
 <LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CAN1_Config
-<LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SystemClock_Config
+<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SystemClock_Config
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> entry9a.o(.ARM.Collect$$$$0000000B)
 </UL>
-<P><STRONG><a name="[d4]"></a>motorGoHome</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, motor.o(i.motorGoHome))
+<P><STRONG><a name="[e6]"></a>motorGoHome</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, motor.o(i.motorGoHome))
 <BR><BR>[Stack]<UL><LI>Max Depth = 76<LI>Call Chain = motorGoHome &rArr; CAN1_Send_Msg &rArr; HAL_CAN_AddTxMessage
 </UL>
 <BR>[Calls]<UL><LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CAN1_Send_Msg
 </UL>
-<BR>[Called By]<UL><LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;motor_AllGoHome
-<LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NotifyButton
+<BR>[Called By]<UL><LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;motor_AllGoHome
+<LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
 <P><STRONG><a name="[cf]"></a>motorGoPosition</STRONG> (Thumb, 40 bytes, Stack size 8 bytes, motor.o(i.motorGoPosition))
@@ -1433,11 +1431,11 @@ Global Symbols
 <LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MoveFifthMotor
 </UL>
 
-<P><STRONG><a name="[e6]"></a>motor_AllGoHome</STRONG> (Thumb, 202 bytes, Stack size 32 bytes, motor.o(i.motor_AllGoHome))
+<P><STRONG><a name="[e5]"></a>motor_AllGoHome</STRONG> (Thumb, 202 bytes, Stack size 32 bytes, motor.o(i.motor_AllGoHome))
 <BR><BR>[Stack]<UL><LI>Max Depth = 108<LI>Call Chain = motor_AllGoHome &rArr; motorGoHome &rArr; CAN1_Send_Msg &rArr; HAL_CAN_AddTxMessage
 </UL>
-<BR>[Calls]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
-<LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;motorGoHome
+<BR>[Calls]<UL><LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;motorGoHome
+<LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
 </UL>
 <BR>[Called By]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
@@ -1447,7 +1445,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CAN1_Send_Msg
 </UL>
-<BR>[Called By]<UL><LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutDownMaterial
+<BR>[Called By]<UL><LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutDownMaterial
 <LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetMaterial
 </UL>
 
@@ -1457,13 +1455,13 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_PeriodElapsedCallback
 </UL>
 
-<P><STRONG><a name="[e2]"></a>queue_push</STRONG> (Thumb, 26 bytes, Stack size 8 bytes, cmd_queue.o(i.queue_push))
+<P><STRONG><a name="[e1]"></a>queue_push</STRONG> (Thumb, 26 bytes, Stack size 8 bytes, cmd_queue.o(i.queue_push))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = queue_push
 </UL>
 <BR>[Called By]<UL><LI><a href="#[30]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_IRQHandler
 </UL>
 
-<P><STRONG><a name="[e3]"></a>queue_reset</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, cmd_queue.o(i.queue_reset))
+<P><STRONG><a name="[e2]"></a>queue_reset</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, cmd_queue.o(i.queue_reset))
 <BR><BR>[Called By]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 <P>
@@ -1518,8 +1516,8 @@ Local Symbols
 <P><STRONG><a name="[bd]"></a>UART_SetConfig</STRONG> (Thumb, 258 bytes, Stack size 16 bytes, stm32f4xx_hal_uart.o(i.UART_SetConfig))
 <BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = UART_SetConfig &rArr; __aeabi_uldivmod
 </UL>
-<BR>[Calls]<UL><LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_RCC_GetPCLK2Freq
-<LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_RCC_GetPCLK1Freq
+<BR>[Calls]<UL><LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_RCC_GetPCLK2Freq
+<LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_RCC_GetPCLK1Freq
 <LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uldivmod
 </UL>
 <BR>[Called By]<UL><LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Init

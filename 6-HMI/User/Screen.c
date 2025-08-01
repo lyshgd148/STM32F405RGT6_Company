@@ -69,42 +69,28 @@ void NotifyButton(uint16 screen_id, uint16 control_id, uint8  state)
 		{
 			if(control_id==2 && state==1 && state_dbg==0  && goHomeFlag_dbg==1)      //1
 			{
-				HAL_GPIO_WritePin(Y6_GPIO_Port, Y6_Pin, GPIO_PIN_SET); 
 				heigh_dbg+=100;
-				MoveFifthMotor(1000, 100,heigh_dbg*16384/lead_screw);
 				state_dbg=1;
-				HAL_GPIO_WritePin(Y6_GPIO_Port, Y6_Pin, GPIO_PIN_SET); 
 			}
 			
 			else if(control_id==3 && state==1 && state_dbg==0 && goHomeFlag_dbg==1)  //2
 			{	
-				motorGoHome(1);
-				motorGoHome(2);
-				motorGoHome(3);
-				motorGoHome(4);
-				motorGoHome(5);
 				state_dbg=2;	
 			}
 			
 			else if(control_id==4 && state==1 && state_dbg==0 && goHomeFlag_dbg==1)  //3
 			{
 				heigh_dbg-=100;
-				MoveFifthMotor(1000, 100,heigh_dbg*16384/lead_screw);
 				state_dbg=3;
 			}
 			
 			else if(control_id==5 && state==1 && state_dbg==0 && goHomeFlag_dbg==1)  //4
 			{
-				MoveFirstGMotors(firstFlag_dgb%2,500,50);
-				firstFlag_dgb++;
 				state_dbg=4;
-
 			}
 			
 			else if(control_id==6 && state==1 && state_dbg==0 && goHomeFlag_dbg==1)  //5
 			{
-				MoveSecondGMotors(secondFlag_dgb%2,500,50);
-				secondFlag_dgb++;
 				state_dbg=5;
 			}
 		}
