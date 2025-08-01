@@ -189,7 +189,8 @@ int main(void)
 		
 		Sys_Run(tray_num-1);
 		HAL_Delay(2500);
-		motor_AllGoHome();
+		if(tray_num != 1)
+			motor_AllGoHome();
 		
 		SetButtonValue(0, 2, 0);
 		MySetIcon(0,4,0);
