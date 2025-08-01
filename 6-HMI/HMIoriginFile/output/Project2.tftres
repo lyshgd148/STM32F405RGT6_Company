@@ -1,0 +1,17 @@
+<Resource>
+    <pages>
+        <page name="Screen0" id="0" />
+        <page name="Screen1" id="1" />
+        <page name="debug" id="2" />
+    </pages>
+    <images>
+        <image id="0" url="c:\users\12698\desktop\云图\hmi\project2\images\bck.jpg" effect_width="800" effect_height="480" />
+        <image id="1" url="c:\users\12698\desktop\云图\hmi\project2\images\icon1.ICON" effect_width="91" effect_height="82" />
+        <image id="2" url="c:\users\12698\desktop\云图\hmi\project2\images\icon2.ICON" effect_width="406" effect_height="213" />
+        <image id="3" url="c:\users\12698\desktop\云图\hmi\project2\images\icon3.ICON" effect_width="41" effect_height="39" />
+        <image id="4" url="c:\users\12698\desktop\云图\hmi\project2\images\icon4.ICON" effect_width="41" effect_height="39" />
+        <image id="5" url="c:\users\12698\desktop\云图\hmi\project2\images\errorWin.png" effect_width="334" effect_height="215" />
+        <image id="6" url="c:\users\12698\desktop\云图\hmi\project2\images\DeBuug.png" effect_width="762" effect_height="444" />
+    </images>
+    <waves />
+</Resource>
