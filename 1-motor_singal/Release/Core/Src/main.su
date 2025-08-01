@@ -1,0 +1,13 @@
+../Core/Src/main.c:98:6:CAN1_Config	48	static
+../Core/Src/main.c:136:9:canCRC_ATM	12	static
+../Core/Src/main.c:152:9:CAN1_Send_Msg	64	static
+../Core/Src/main.c:184:6:motorGoHome	0	static
+../Core/Src/main.c:191:6:motorGoPosition	8	static
+../Core/Src/main.c:206:6:motorReadPosition	0	static
+../Core/Src/main.c:214:6:canDataReceived	8	static
+../Core/Src/main.c:245:6:read_all	8	static
+../Core/Src/main.c:264:6:run_action	40	static
+../Core/Src/main.c:352:6:Motor_Init	12	static
+../Core/Src/main.c:452:6:SystemClock_Config	88	static,ignoring_inline_asm
+../Core/Src/main.c:390:5:main	8	static
+../Core/Src/main.c:501:6:Error_Handler	0	static,ignoring_inline_asm

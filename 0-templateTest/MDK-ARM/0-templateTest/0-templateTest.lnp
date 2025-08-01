@@ -1,0 +1,24 @@
+--cpu Cortex-M4.fp
+"0-templatetest\startup_stm32f405xx.o"
+"0-templatetest\main.o"
+"0-templatetest\gpio.o"
+"0-templatetest\stm32f4xx_it.o"
+"0-templatetest\stm32f4xx_hal_msp.o"
+"0-templatetest\stm32f4xx_hal_rcc.o"
+"0-templatetest\stm32f4xx_hal_rcc_ex.o"
+"0-templatetest\stm32f4xx_hal_flash.o"
+"0-templatetest\stm32f4xx_hal_flash_ex.o"
+"0-templatetest\stm32f4xx_hal_flash_ramfunc.o"
+"0-templatetest\stm32f4xx_hal_gpio.o"
+"0-templatetest\stm32f4xx_hal_dma_ex.o"
+"0-templatetest\stm32f4xx_hal_dma.o"
+"0-templatetest\stm32f4xx_hal_pwr.o"
+"0-templatetest\stm32f4xx_hal_pwr_ex.o"
+"0-templatetest\stm32f4xx_hal_cortex.o"
+"0-templatetest\stm32f4xx_hal.o"
+"0-templatetest\stm32f4xx_hal_exti.o"
+"0-templatetest\system_stm32f4xx.o"
+--strict --scatter "0-templateTest\0-templateTest.sct"
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "0-templateTest.map" -o 0-templateTest\0-templateTest.axf

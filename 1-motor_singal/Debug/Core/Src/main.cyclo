@@ -1,0 +1,14 @@
+../Core/Src/main.c:98:6:CAN1_Config	1
+../Core/Src/main.c:136:9:canCRC_ATM	2
+../Core/Src/main.c:152:9:CAN1_Send_Msg	4
+../Core/Src/main.c:184:6:motorStop	1
+../Core/Src/main.c:192:6:motorGoHome	1
+../Core/Src/main.c:199:6:motorGoPosition	1
+../Core/Src/main.c:214:6:motorReadPosition	1
+../Core/Src/main.c:222:6:canDataReceived	9
+../Core/Src/main.c:253:6:read_all	10
+../Core/Src/main.c:272:6:run_action	13
+../Core/Src/main.c:360:6:Motor_Init	2
+../Core/Src/main.c:398:5:main	1
+../Core/Src/main.c:475:6:SystemClock_Config	3
+../Core/Src/main.c:524:6:Error_Handler	1

@@ -1,0 +1,18 @@
+15:20:15 **** Incremental Build of configuration Release for project motor_8b_double ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -DUSE_HAL_DRIVER -DSTM32F405xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -Os -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "motor_8b_double.elf" @"objects.list"   -mcpu=cortex-m4 -T"F:\STM32HAL\motor_8b_double.zip_expanded\motor_8b_double\STM32F405RGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="motor_8b_double.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+E:/CUBIDE/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/bin/ld.exe: warning: motor_8b_double.elf has a LOAD segment with RWX permissions
+Finished building target: motor_8b_double.elf
+ 
+arm-none-eabi-size  motor_8b_double.elf 
+arm-none-eabi-objdump -h -S motor_8b_double.elf  > "motor_8b_double.list"
+   text	   data	    bss	    dec	    hex	filename
+   8492	     60	   1780	  10332	   285c	motor_8b_double.elf
+Finished building: default.size.stdout
+ 
+Finished building: motor_8b_double.list
+ 
+
+15:20:16 Build Finished. 0 errors, 1 warnings. (took 760ms)
+

@@ -1,0 +1,295 @@
+#include "motor.h"
+#include "can.h"
+
+MotorStatus motor_statuses[motor_num];
+
+uint8_t inputs[motor_num]={0,0,0,0,0};				//大丝杠导程,单位:mm
+uint32_t tray_offset=200/lead_screw*16384;    		//第一个料盘的偏置位置 mm
+uint32_t heigh=300/lead_screw*16384;  				//层高 mm
+uint32_t PutDown_offset;							//放第一个料盘的偏置位置
+
+int32_t tray_position[tray_num];     		   	 	//料盘位置
+int32_t PutDown_position[tray_num];					//摆放料盘的位置
+
+uint8_t statrt_layer=10;							//料盘起始层
+
+
+void Motor_Init(void)
+{
+	uint8_t i;
+
+	for(i=0;i<motor_num;i++)
+	{
+	  motor_statuses[i].id = i+1;
+	}
+}
+
+void motorGoHome(uint8_t slaveAddr)
+{
+  txBuffer[0] = 0x91;
+  CAN1_Send_Msg(txBuffer,2,slaveAddr);
+}
+
+void motor_AllGoHome(void)
+{
+	uint8_t i;
+	for(i=0;i<motor_num;i++)
+	{
+		motorGoHome(i+1);
+		HAL_Delay(50);
+	}
+}
+
+void motorGoPosition(uint8_t slaveAddr,uint16_t speed,uint8_t acc,int32_t pos)
+{
+  txBuffer[0] = 0xF5;       		//FD:相对脉冲(16细分*200),FE:绝对脉冲
+  	  	  	  	  	  	  	  	  	//F4:相对坐标,F5:绝对坐标(16384/r)
+
+  txBuffer[1] = (speed>>8)&0x00FF;  //
+  txBuffer[2] = speed&0x00FF;
+  txBuffer[3] = acc;
+  txBuffer[4] = (pos >> 16)&0xFF;  // bit23 - bit16
+  txBuffer[5] = (pos >> 8)&0xFF;   // bit15 - bit8
+  txBuffer[6] = (pos >> 0)&0xFF;   // bit7 - bit0
+  CAN1_Send_Msg(txBuffer,8,slaveAddr);
+}
+
+
+void motorReadPosition(uint8_t slaveAddr)
+{
+	txBuffer[0] = 0x31;
+	CAN1_Send_Msg(txBuffer,2,slaveAddr);
+}
+
+void motor_read(void)
+{
+	if(HAL_GPIO_ReadPin(X1_GPIO_Port, X1_Pin)==0)	inputs[0]=1;
+	if(HAL_GPIO_ReadPin(X2_GPIO_Port, X2_Pin)==0)	inputs[1]=1;
+	if(HAL_GPIO_ReadPin(X3_GPIO_Port, X3_Pin)==0)	inputs[2]=1;
+	if(HAL_GPIO_ReadPin(X4_GPIO_Port, X4_Pin)==0)	inputs[3]=1;
+	if(HAL_GPIO_ReadPin(X5_GPIO_Port, X5_Pin)==0)	inputs[4]=1;
+}
+
+
+
+void Tray_posInit(void)														//料盘位置初始化
+{
+	uint8_t i;								//从10开始
+	for(i=tray_num;i>1;i--){
+		tray_position[i-1]=tray_offset+(i-2)*heigh;
+	}
+	tray_position[0]=tray_position[tray_num-1]+heigh/2;
+}
+
+void PutDown_posInit(void)													//料盘放置位置初始化
+{
+	uint8_t i;								//从q开始
+	for(i=1;i<tray_num;i++)
+	{
+		PutDown_position[i]=PutDown_offset+((i-1)*heigh);
+	}
+	PutDown_position[0]=PutDown_position[tray_num-1]+heigh/4;
+}
+
+void motion_dectect(void)  													//检测电机状态
+{
+
+}
+
+void MoveFirstGMotors(uint8_t state,uint16_t speed,uint8_t acc)
+{
+	if(state==0)							//钩子张开
+	{
+		motorGoPosition(1,1000,100,240000);
+		motorGoPosition(2,1000,100,-240000);
+	}
+	else if(state==1)
+	{
+		motorGoPosition(1,1000,100,-200);
+		motorGoPosition(2,1000,100,200);
+	}
+}
+
+void MoveSecondGMotors(uint8_t state,uint16_t speed,uint8_t acc)
+{
+	if(state==0)							//小臂前伸
+	{
+		motorGoPosition(3,speed,acc,-7900);
+		motorGoPosition(4,speed,acc,-7900);
+	}
+	else if(state==1)
+	{
+		motorGoPosition(3,speed,acc,5000);
+		motorGoPosition(4,speed,acc,5000);
+	}
+}
+
+void MoveFifthMotor(uint16_t speed,uint8_t acc,int32_t pos)
+{
+	motorGoPosition(5,speed,acc,pos);
+}
+
+void GetMaterial(uint8_t num)												//去取num盘料
+{
+	uint32_t tick=0;
+/*-----------------------整体升降到料盘处-----------------------------*/
+	MoveFifthMotor(500, 50, tray_position[num]);
+	while(motor_statuses[4].is_reach!=1)
+	{
+		HAL_Delay(50);
+		tick+=1;
+		if(tick>=10000) break;
+	};
+	if(motor_statuses[4].is_reach==0)
+	{
+		/*
+		 *
+		 * 错误处理
+		 *
+		 * */
+	}
+	else
+	{
+		motor_statuses[4].is_reach=0;
+		tick=0;
+	}
+
+/*--------------------------钩子钩住--------------------------*/
+		MoveFirstGMotors(0, 1000, 100);
+		while(motor_statuses[0].is_reach!=1 || motor_statuses[1].is_reach!=1)
+		{
+			HAL_Delay(50);
+			tick+=1;
+			if(tick>=10000) break;
+		};
+		if(motor_statuses[0].is_reach==0 || motor_statuses[1].is_reach==0 )
+		{
+			/*
+			 *
+			 * 错误处理
+			 *
+			 * */
+		}
+		else
+		{
+			motor_statuses[0].is_reach=0;
+			motor_statuses[1].is_reach=0;
+			tick=0;
+		}
+/*---------------------------整体上升到机器人工作处-------------------------*/
+			MoveFifthMotors(500, 50, tray_position[0]);
+			while(motor_statuses[4].is_reach!=1)
+			{
+				HAL_Delay(50);
+				tick+=1;
+				if(tick>=10000) break;
+			};
+			if(motor_statuses[4].is_reach==0)
+			{
+				/*
+				 *
+				 * 错误处理
+				 *
+				 * */
+			}
+			else
+			{
+				motor_statuses[4].is_reach=0;
+				tick=0;
+			}
+}
+
+void PutDownMaterial(uint8_t num)											//放第num盘料
+{
+	uint32_t tick=0;
+/*---------------------------整体降到放料最高点-------------------------*/
+	MoveFifthMotor(500, 50, PutDown_position[0]);
+	while(motor_statuses[4].is_reach!=1)
+	{
+		HAL_Delay(50);
+		tick+=1;
+		if(tick>=10000) break;
+	};
+	if(motor_statuses[4].is_reach==0)
+	{
+		/*
+		 *
+		 * 错误处理
+		 *
+		 * */
+	}
+	else
+	{
+		motor_statuses[4].is_reach=0;
+		tick=0;
+	}
+
+/*---------------------------小臂前伸-------------------------*/
+	MoveSecondGMotors(0, 1000, 50);
+	while(motor_statuses[2].is_reach!=1 || motor_statuses[3].is_reach!=1)
+	{
+		HAL_Delay(50);
+		tick+=1;
+		if(tick>=10000) break;
+	};
+	if(motor_statuses[2].is_reach==0 || motor_statuses[3].is_reach==0)
+	{
+		/*
+		 *
+		 * 错误处理
+		 *
+		 * */
+	}
+	else
+	{
+		motor_statuses[2].is_reach=0;
+		motor_statuses[3].is_reach=0;
+		tick=0;
+	}
+
+/*---------------------------整体降到放料点-------------------------*/
+	MoveFifthMotor(500, 50, PutDown_position[num]);
+	while(motor_statuses[4].is_reach!=1)
+	{
+		HAL_Delay(50);
+		tick+=1;
+		if(tick>=10000) break;
+	};
+	if(motor_statuses[4].is_reach==0)
+	{
+		/*
+		 *
+		 * 错误处理
+		 *
+		 * */
+	}
+	else
+	{
+		motor_statuses[4].is_reach=0;
+		tick=0;
+	}
+
+/*---------------------------钩子松开-------------------------*/
+	MoveFirstGMotors(0, 1000, 100);
+		while(motor_statuses[0].is_reach!=1 || motor_statuses[1].is_reach!=1)
+		{
+			HAL_Delay(50);
+			tick+=1;
+			if(tick>=10000) break;
+		};
+		if(motor_statuses[0].is_reach==0 || motor_statuses[1].is_reach==0 )
+		{
+			/*
+			 *
+			 * 错误处理
+			 *
+			 * */
+		}
+		else
+		{
+			motor_statuses[0].is_reach=0;
+			motor_statuses[1].is_reach=0;
+			tick=0;
+		}
+
+}

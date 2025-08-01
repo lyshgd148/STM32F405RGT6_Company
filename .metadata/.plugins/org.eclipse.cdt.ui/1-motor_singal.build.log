@@ -1,0 +1,10 @@
+13:32:32 **** Incremental Build of configuration Debug for project 1-motor_singal ****
+make -j8 all 
+arm-none-eabi-size  1-motor_singal.elf 
+   text	   data	    bss	    dec	    hex	filename
+  12548	     20	   1852	  14420	   3854	1-motor_singal.elf
+Finished building: default.size.stdout
+ 
+
+13:32:32 Build Finished. 0 errors, 0 warnings. (took 419ms)
+

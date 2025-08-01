@@ -1,0 +1,30 @@
+#ifndef USER_MOTOR_H_
+#define USER_MOTOR_H_
+
+#include <stdint.h>
+
+#define motor_num 5
+#define pos_num   2
+
+typedef struct {
+    uint8_t id;				//1,2,3,4,5
+    uint8_t isreach_pos;
+    uint8_t pos_next;
+} MotorStatus;
+
+
+extern MotorStatus motor_statuses[motor_num];
+extern uint8_t inputs[motor_num];
+
+extern int32_t position[motor_num][pos_num];
+
+
+void Motor_Init(void);
+void motorGoHome(uint8_t slaveAddr);
+void motorGoPosition(uint8_t slaveAddr,uint16_t speed,uint8_t acc,int32_t pos);//指定电机运行到绝对位置
+void motorReadPosition(uint8_t slaveAddr); //读取电机的绝对位置
+void motor_read_state_run(void);
+
+
+
+#endif /* USER_MOTOR_H_ */

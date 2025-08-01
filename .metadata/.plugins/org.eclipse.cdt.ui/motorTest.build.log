@@ -1,0 +1,10 @@
+13:46:30 **** Incremental Build of configuration Debug for project motorTest ****
+make -j8 all 
+arm-none-eabi-size  motorTest.elf 
+   text	   data	    bss	    dec	    hex	filename
+  10824	     12	   1756	  12592	   3130	motorTest.elf
+Finished building: default.size.stdout
+ 
+
+13:46:31 Build Finished. 0 errors, 0 warnings. (took 300ms)
+

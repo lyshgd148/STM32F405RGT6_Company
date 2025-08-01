@@ -1,0 +1,48 @@
+#ifndef USER_MOTOR_H_
+#define USER_MOTOR_H_
+
+#include <stdint.h>
+
+#define motor_num  5
+#define lead_screw 10																//大丝杠导程,单位:mm
+#define tray_num   39       															//11 料盘总数为10， 第0 个为料仓托举到机器人工作位置
+
+typedef struct {
+    uint8_t id;																		//1,2,3,4,5
+    uint8_t is_reach;
+} MotorStatus;
+
+
+extern MotorStatus motor_statuses[motor_num];										//电机状态
+extern uint8_t inputs[motor_num];													//输入状态
+extern uint8_t stop_state;	                                                            // 急停状态机 0:不停机 1:停机
+
+
+
+
+void motorGoHome(uint8_t slaveAddr);												//电机回零
+void motor_AllGoHome(void);															//所有电机回零
+void motorGoPosition(uint8_t slaveAddr,uint16_t speed,uint8_t acc,int32_t pos); 	//指定电机运行到绝对位置
+void motorReadPosition(uint8_t slaveAddr); 											//读取电机的绝对位置
+void motor_read(void);																//读取输入
+void Tray_posInit(uint32_t tray_offset,uint32_t heigh);								//料盘位置初始化     tray_offset:第一层位置 (单位mm)   heigh:每层高度(单位 mm)
+void PutDown_posInit(uint32_t PutDown_offset,uint32_t heigh);							//料盘放置位置初始化 PutDown_offset:第一层位置(单位mm) heigh:每层高度(单位 mm)
+
+void MoveFirstGMotors(uint8_t state,uint16_t speed,uint8_t acc);					//移动第一组电机
+void MoveSecondGMotors(uint8_t state,uint16_t speed,uint8_t acc);					//移动第二组电机
+void MoveFifthMotor(uint16_t speed,uint8_t acc,int32_t pos);                   		//移动第五个电机
+void GetMaterial(uint8_t num);														//去取num盘料
+void PutDownMaterial(uint8_t num);													//放第num盘料
+void IO_Tran(void);																	//输出IO信号 料仓告知机器人料盘到位
+uint8_t IO_Read(void);																	//输入IO 机器人告知料仓已近取完
+
+
+void Motor_Init(void);   															//初始化电机
+void Position_Init(uint32_t tray_offset,uint32_t PutDown_offset,uint32_t heigh);	//取料放料位置初始化
+void Run(uint8_t statrnum);															//机器人加工一盘 流程:取盘、完成、放盘
+void Sys_Run(uint8_t stratnum);														//跑完循环
+
+void motor_Stop(uint16_t id);                                                       //电机急停
+
+
+#endif /* USER_MOTOR_H_ */
