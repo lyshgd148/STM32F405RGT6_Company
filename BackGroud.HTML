@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>江苏云图机器人有限公司</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: black;
+      overflow: hidden;
+      color: #00ff00;
+      font-family: "Courier New", monospace;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+
+    .content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.6);
+      padding: 40px;
+      border-radius: 10px;
+      text-align: center;
+      color: #00ff00;
+    }
+
+    h1 {
+      font-size: 36px;
+      margin: 0;
+    }
+
+    p {
+      font-size: 16px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="matrix"></canvas>
+
+<div class="content">
+  <h1>江苏云图机器人有限公司</h1>
+  <p>专注于智能制造、工业机器人与自动化控制解决方案</p>
+</div>
+
+<script>
+  const canvas = document.getElementById('matrix');
+  const ctx = canvas.getContext('2d');
+
+  canvas.height = window.innerHeight;
+  canvas.width = window.innerWidth;
+
+  const letters = '01';
+  const fontSize = 16;
+  const columns = canvas.width / fontSize;
+
+  const drops = Array.from({ length: columns }, () => 1);
+
+  function draw() {
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = '#0F0';
+    ctx.font = fontSize + 'px monospace';
+
+    for (let i = 0; i < drops.length; i++) {
+      const text = letters.charAt(Math.floor(Math.random() * letters.length));
+      ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+      if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+        drops[i] = 0;
+      }
+      drops[i]++;
+    }
+  }
+
+  setInterval(draw, 33);
+</script>
+
+</body>
+</html>
