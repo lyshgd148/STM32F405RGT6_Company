@@ -59,7 +59,7 @@ void motor_AllGoHome(void) /*要小改一下*/
 	{
 		HAL_Delay(100);
 		tick++;
-		if (tick >= 1000)
+		if (tick >= 600)
 		{
 			break;
 		}
@@ -74,7 +74,30 @@ void motor_AllGoHome(void) /*要小改一下*/
 		motor_statuses[0].is_reach = 0;
 		motor_statuses[1].is_reach = 0;
 	}
-	HAL_Delay(500);
+	HAL_Delay(100);
+	/*----------------------------------------------------------------------------------*/
+	motorGoPosition(1, 1000, 100, -22000);
+	motorGoPosition(2, 1000, 100, -16000);
+	while (motor_statuses[0].is_reach == 0 || motor_statuses[1].is_reach == 0)
+	{
+		HAL_Delay(100);
+		tick++;
+		if (tick >= 200)
+		{
+			break;
+		}
+	}
+	if (motor_statuses[0].is_reach == 0 || motor_statuses[1].is_reach == 0)
+	{
+		/*错误处理*/
+	}
+	else
+	{
+		tick = 0;
+		motor_statuses[0].is_reach = 0;
+		motor_statuses[1].is_reach = 0;
+	}
+	HAL_Delay(100);
 	/*----------------------------------------------------------------------------------*/
 	motorGoHome(3);
 	motorGoHome(4);
@@ -82,7 +105,7 @@ void motor_AllGoHome(void) /*要小改一下*/
 	{
 		HAL_Delay(100);
 		tick++;
-		if (tick >= 1000)
+		if (tick >= 400)
 		{
 			break;
 		}
@@ -97,14 +120,37 @@ void motor_AllGoHome(void) /*要小改一下*/
 		motor_statuses[2].is_reach = 0;
 		motor_statuses[3].is_reach = 0;
 	}
-	HAL_Delay(500);
+	HAL_Delay(100);
+	/*----------------------------------------------------------------------------------*/
+	motorGoPosition(3, 1000, 100, 910);
+	motorGoPosition(4, 1000, 100, -1274);
+	while (motor_statuses[2].is_reach == 0 || motor_statuses[3].is_reach == 0)
+	{
+		HAL_Delay(100);
+		tick++;
+		if (tick >= 200)
+		{
+			break;
+		}
+	}
+	if (motor_statuses[2].is_reach == 0 || motor_statuses[3].is_reach == 0)
+	{
+		/*错误处理*/
+	}
+	else
+	{
+		tick = 0;
+		motor_statuses[2].is_reach = 0;
+		motor_statuses[3].is_reach = 0;
+	}
+	HAL_Delay(100);
 	/*----------------------------------------------------------------------------------*/
 	motorGoHome(5);
 	while (motor_statuses[4].is_reach == 0)
 	{
 		HAL_Delay(100);
 		tick++;
-		if (tick >= 1000)
+		if (tick >= 1500)
 		{
 			break;
 		}
@@ -125,7 +171,7 @@ void motor_AllGoHome(void) /*要小改一下*/
 	{
 		HAL_Delay(100);
 		tick++;
-		if (tick >= 50000)
+		if (tick >= 300)
 		{
 			break;
 		}
@@ -215,27 +261,27 @@ void MoveFirstGMotors(uint8_t state, uint16_t speed, uint8_t acc)
 {
 	if (state == 0) // 钩子张开
 	{
-		motorGoPosition(1, 1000, 150, -240000);
-		motorGoPosition(2, 1000, 150, -240000);
+		motorGoPosition(1, speed, acc, -228000);
+		motorGoPosition(2, speed, acc, -250000);
 	}
 	else if (state == 1)
 	{
-		motorGoPosition(1, 1000, 100, 0);
-		motorGoPosition(2, 1000, 100, 0);
+		motorGoPosition(1, speed, acc, -16000);
+		motorGoPosition(2, speed, acc, -22000);
 	}
 }
 
 void MoveSecondGMotors(uint8_t state, uint16_t speed, uint8_t acc)
 {
-	if (state == 0) // 小臂前伸
+	if (state == 0) // 小臂前伸到放料处 465，467
 	{
-		motorGoPosition(3, speed, acc, 85500);
-		motorGoPosition(4, speed, acc, -85500);
+		motorGoPosition(3, speed, acc, 84651);
+		motorGoPosition(4, speed, acc, -85015);
 	}
-	else if (state == 1)
+	else if (state == 1)// 小臂前伸到取料处
 	{
-		motorGoPosition(3, speed, acc, 0);
-		motorGoPosition(4, speed, acc, 0);
+		motorGoPosition(3, speed, acc, 910);
+		motorGoPosition(4, speed, acc, -1274);
 	}
 }
 
@@ -295,8 +341,138 @@ uint8_t GetMaterial(uint8_t num) // 去取num盘料
 		}
 	}
 	motor_statuses[4].is_reach = 0;
+	
+	/*---------------------------小臂取料处-------------------------*/
+	tick = 0;
+	while (motor_statuses[2].is_reach == 0 || motor_statuses[3].is_reach == 0)
+	{
+		MoveSecondGMotors(1, 1000, 50);
+		while (motor_statuses[2].is_reach != 1 || motor_statuses[3].is_reach != 1)
+		{
 
-	/*--------------------------钩子钩住--------------------------*/
+			tick += 1;
+			if (tick >= 1000)
+			{
+				timeoutFlag = 1;
+				break;
+			}
+			if (stop_state == 1 || updateFlag == 0)
+			{
+				motor_Stop(3);
+				HAL_Delay(50);
+				motor_Stop(4);
+				HAL_Delay(450);
+				break;
+			}
+			HAL_Delay(50);
+		};
+		while (stop_state == 1)
+		{
+			if (updateFlag == 0)
+				return 1;
+			HAL_Delay(50);
+		};
+		tick = 0;
+		if ((motor_statuses[2].is_reach == 0 || motor_statuses[3].is_reach == 0) && timeoutFlag == 1)
+		{
+			timeoutFlag = 0;
+			LED_Red();
+			/*
+			 错误处理
+			*/
+		}
+	}
+	motor_statuses[2].is_reach = 0;
+	motor_statuses[3].is_reach = 0;
+
+//	/*--------------------------钩子钩住1--------------------------*/
+//	tick = 0;
+//	while (motor_statuses[0].is_reach == 0 || motor_statuses[1].is_reach == 0)
+//	{
+//		motorGoPosition(1, 1000, 100, -224667);
+//		motorGoPosition(2, 1000, 100, -210667);
+//		while (motor_statuses[0].is_reach != 1 || motor_statuses[1].is_reach != 1)
+//		{
+
+//			tick += 1;
+//			if (tick >= 1000)
+//			{
+//				timeoutFlag = 1;
+//				break;
+//			}
+//			if (stop_state == 1 || updateFlag == 0)
+//			{
+//				motor_Stop(1);
+//				HAL_Delay(50);
+//				motor_Stop(2);
+//				HAL_Delay(450);
+//				break;
+//			}
+//			HAL_Delay(50);
+//		};
+//		while (stop_state == 1)
+//		{
+//			if (updateFlag == 0)
+//				return 1;
+//			HAL_Delay(50);
+//		};
+//		tick = 0;
+//		if ((motor_statuses[0].is_reach == 0 || motor_statuses[1].is_reach == 0) && timeoutFlag == 1)
+//		{
+//			timeoutFlag = 0;
+//			LED_Red();
+//			/*
+//			  错误处理
+//			*/
+//		}
+//	}
+//	motor_statuses[0].is_reach = 0;
+//	motor_statuses[1].is_reach = 0;
+//	
+//	/*-----------------------整体升降到料盘上方-----------------------------*/
+//	while (motor_statuses[4].is_reach == 0)
+//	{
+//		MoveFifthMotor(2500, 180, (int32_t)(tray_position[num]+heigh*1.2 * 16384 / lead_screw));
+//		while (motor_statuses[4].is_reach != 1)
+//		{
+//			tick += 1;
+//			if (tick >= 1000)
+//			{
+//				timeoutFlag = 1;
+//				break;
+//			}
+//			if (stop_state == 1 || updateFlag == 0)
+//			{
+//				// motor_Stop(5);
+//				motor_Sstop(5, 0);
+//				while (motor_statuses[4].is_reach == 0)
+//				{
+//					HAL_Delay(50);
+//				}
+//				motor_statuses[4].is_reach = 0;
+//				break;
+//			}
+//			HAL_Delay(50);
+//		};
+//		while (stop_state != 0)
+//		{
+//			if (updateFlag == 0)
+//				return 1;
+//			HAL_Delay(50);
+//		};
+//		tick = 0;
+//		if (motor_statuses[4].is_reach == 0 && timeoutFlag == 1)
+//		{
+//			timeoutFlag = 0;
+//			LED_Red();
+//			/*
+//				错误处理
+//			*/
+//		}
+//	}
+//	motor_statuses[4].is_reach = 0;
+//	
+	/*--------------------------钩子钩住1--------------------------*/
 	tick = 0;
 	while (motor_statuses[0].is_reach == 0 || motor_statuses[1].is_reach == 0)
 	{
@@ -434,7 +610,7 @@ uint8_t PutDownMaterial(uint8_t num) // 放第num盘料
 	}
 	motor_statuses[4].is_reach = 0;
 
-	/*---------------------------小臂前伸-------------------------*/
+	/*---------------------------小臂放料处-------------------------*/
 	tick = 0;
 	while (motor_statuses[2].is_reach == 0 || motor_statuses[3].is_reach == 0)
 	{
@@ -565,7 +741,7 @@ uint8_t PutDownMaterial(uint8_t num) // 放第num盘料
 	motor_statuses[0].is_reach = 0;
 	motor_statuses[1].is_reach = 0;
 
-	/*---------------------------小臂后缩-------------------------*/
+	/*---------------------------小臂取料处-------------------------*/
 	tick = 0;
 	while (motor_statuses[2].is_reach == 0 || motor_statuses[3].is_reach == 0)
 	{

@@ -27,32 +27,61 @@ extern uint8_t flag;
 
 void Mydebug(void)
 {
+	uint32_t tick;
+	uint8_t err;
+	
 	if (hookR_flag == 1)
 	{
+		tick=0;
+		err=0;
 		motorGoPosition(1, 1000, 150, -1 * hookR_angle);
 		LED_Yellow();
 		while (motor_statuses[0].is_reach == 0)
-		{
+		{	
+			tick++;
+			if(tick>601)
+			{
+				err=1;
+				break;
+			}
 			HAL_Delay(100);
 		}
-		LED_Green();
+		if(err==1)
+			LED_Red();
+		else
+			LED_Green();
+		
 		hookR_flag = 0;
 		motor_statuses[0].is_reach = 0;
 	}
 	else if (hookL_flag == 1)
 	{
+		tick=0;
+		err=0;
 		motorGoPosition(2, 1000, 150, -1 * hookL_angle);
 		LED_Yellow();
 		while (motor_statuses[1].is_reach == 0)
 		{
+			tick++;
+			if(tick>601)
+			{
+				err=1;
+				break;
+			}
 			HAL_Delay(100);
 		}
-		LED_Green();
+		if(err==1)
+			LED_Red();
+		else
+			LED_Green();
 		hookL_flag = 0;
 		motor_statuses[1].is_reach = 0;
 	}
 	else if (hook_flag == 1)
 	{
+		tick=0;
+		err=0;
+		
 		int32_t value=(hookR_angle-22000)/2533.33;
 		motorGoPosition(1, 1000, 150, -1 * hookR_angle);
 		motorGoPosition(2, 1000, 150, -1 * hookL_angle);
@@ -61,23 +90,45 @@ void Mydebug(void)
 		LED_Yellow();
 		while (motor_statuses[0].is_reach == 0 || motor_statuses[1].is_reach == 0)
 		{
+			tick++;
+			if(tick>601)
+			{
+				err=1;
+				break;
+			}
 			HAL_Delay(100);
 		}
-		LED_Green();
+		if(err==1)
+			LED_Red();
+		else
+			LED_Green();
 		hook_flag = 0;
 		motor_statuses[0].is_reach = 0;
 		motor_statuses[1].is_reach = 0;
 	}
 	else if (arm_flag == 1)
 	{
+		tick=0;
+		err=0;
+		
 		motorGoPosition(3, 1000, 150, arm_length);
-		motorGoPosition(4, 1000, 150, -1 * arm_length);
+		motorGoPosition(4, 1000, 150, -1 * arm_length-364);
 		LED_Yellow();
 		while (motor_statuses[2].is_reach == 0 || motor_statuses[3].is_reach == 0)
 		{
+			tick++;
+			if(tick>601)
+			{
+				err=1;
+				break;
+			}
 			HAL_Delay(100);
 		}
-		LED_Green();
+		if(err==1) 
+			LED_Red();
+		else
+			LED_Green();
+		
 		arm_flag = 0;
 		motor_statuses[2].is_reach = 0;
 		motor_statuses[3].is_reach = 0;
@@ -86,14 +137,27 @@ void Mydebug(void)
 
 	if (state_dbg == 1 || state_dbg == 3)
 	{
+		tick=0;
+		err=0;
+		
 		MoveFifthMotor(1000, 100, heigh_dbg * 16384 / lead_screw);
 		LED_Yellow();
 		while (motor_statuses[4].is_reach == 0)
 		{
+			tick++;
+			if(tick>801)
+			{
+				err=1;
+				break;
+			}
 			HAL_Delay(100);
 		}
-		SetTextFloat(2, 22, (float)(heigh_dbg / 10), 1, 2);
-		LED_Green();
+		if(err==1)
+			LED_Red();
+		else
+			LED_Green();
+		
+		SetTextFloat(2, 22, (float)(heigh_dbg / 10.0), 1, 2);
 		motor_statuses[4].is_reach = 0;
 		state_dbg = 0;
 		flag = 1;
@@ -133,31 +197,61 @@ void Mydebug(void)
 	}
 	else if (state_dbg == 4)
 	{
-		MoveFirstGMotors(firstFlag_dgb % 2, 500, 50);
+		tick=0;
+		err=0;
+		MoveFirstGMotors(firstFlag_dgb, 500, 50);
 		LED_Yellow();
 		while (motor_statuses[0].is_reach == 0 && motor_statuses[1].is_reach == 0)
 		{
+			tick++;
+			if(tick>601)
+			{
+				err=1;
+				break;
+			}
 			HAL_Delay(100);
 		}
-		LED_Green();
+		if(err==1)
+			LED_Red();
+		else
+			LED_Green();
+		
 		motor_statuses[0].is_reach = 0;
 		motor_statuses[1].is_reach = 0;
+		
 		firstFlag_dgb++;
+		firstFlag_dgb%=2;
+		
 		state_dbg = 0;
 		flag = 1;
 	}
 	else if (state_dbg == 5)
 	{
-		MoveSecondGMotors(secondFlag_dgb % 2, 500, 50);
+		tick=0;
+		err=0;
+		
+		MoveSecondGMotors(secondFlag_dgb, 500, 50);
 		LED_Yellow();
 		while (motor_statuses[2].is_reach == 0 && motor_statuses[3].is_reach == 0)
 		{
+			tick++;
+			if(tick>601)
+			{
+				err=1;
+				break;
+			}
 			HAL_Delay(100);
 		}
-		LED_Green();
+		if(err==1) 
+			LED_Red();
+		else
+			LED_Green();
 		motor_statuses[2].is_reach = 0;
 		motor_statuses[3].is_reach = 0;
+		
 		secondFlag_dgb++;
+		secondFlag_dgb%=2;
+		
 		state_dbg = 0;
 		flag = 1;
 	}

@@ -838,7 +838,7 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x687D92E9)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h)(0x687D92E9)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h)(0x687D92E9)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x687D92E9)
-F (..\User\motor.c)(0x68AAB6FA)(--c99 -c --cpu Cortex-M4.fp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../User-I F:\STM32HAL\6-HMI\MDK-ARM\RTE-I E:\Keil5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I E:\Keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="514" -D_RTE_ -DSTM32F405xx -DUSE_HAL_DRIVER -DSTM32F405xx-o 6-hmi\motor.o --omf_browse 6-hmi\motor.crf --depend 6-hmi\motor.d)
+F (..\User\motor.c)(0x68AAF19A)(--c99 -c --cpu Cortex-M4.fp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../User-I F:\STM32HAL\6-HMI\MDK-ARM\RTE-I E:\Keil5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I E:\Keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="514" -D_RTE_ -DSTM32F405xx -DUSE_HAL_DRIVER -DSTM32F405xx-o 6-hmi\motor.o --omf_browse 6-hmi\motor.crf --depend 6-hmi\motor.d)
 I (E:\Keil5\ARM\ARMCC\include\string.h)(0x5475F300)
 I (E:\Keil5\ARM\ARMCC\include\stdint.h)(0x5475F300)
 I (..\User\hmi_driver.h)(0x688AD595)
@@ -882,7 +882,7 @@ I (..\User\debug.h)(0x68AAB39B)
 I (..\User\motor.h)(0x68AAA3E9)
 I (../Core/Inc/can.h)(0x687DD8DE)
 F (..\User\motor.h)(0x68AAA3E9)()
-F (..\User\Screen.c)(0x68AAB30D)(--c99 -c --cpu Cortex-M4.fp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../User-I F:\STM32HAL\6-HMI\MDK-ARM\RTE-I E:\Keil5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I E:\Keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="514" -D_RTE_ -DSTM32F405xx -DUSE_HAL_DRIVER -DSTM32F405xx-o 6-hmi\screen.o --omf_browse 6-hmi\screen.crf --depend 6-hmi\screen.d)
+F (..\User\Screen.c)(0x68AAF137)(--c99 -c --cpu Cortex-M4.fp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../User-I F:\STM32HAL\6-HMI\MDK-ARM\RTE-I E:\Keil5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I E:\Keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="514" -D_RTE_ -DSTM32F405xx -DUSE_HAL_DRIVER -DSTM32F405xx-o 6-hmi\screen.o --omf_browse 6-hmi\screen.crf --depend 6-hmi\screen.d)
 I (..\User\Screen.h)(0x68AAB78F)
 I (../Core/Inc/main.h)(0x68A7CCCA)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x687D92E9)
@@ -998,7 +998,7 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h)(0x687D92E9)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h)(0x687D92E9)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x687D92E9)
 F (..\User\hmi_driver.h)(0x688AD595)()
-F (..\User\debug.c)(0x68AABCB1)(--c99 -c --cpu Cortex-M4.fp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../User-I F:\STM32HAL\6-HMI\MDK-ARM\RTE-I E:\Keil5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I E:\Keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="514" -D_RTE_ -DSTM32F405xx -DUSE_HAL_DRIVER -DSTM32F405xx-o 6-hmi\debug.o --omf_browse 6-hmi\debug.crf --depend 6-hmi\debug.d)
+F (..\User\debug.c)(0x68AAEF39)(--c99 -c --cpu Cortex-M4.fp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../User-I F:\STM32HAL\6-HMI\MDK-ARM\RTE-I E:\Keil5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I E:\Keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="514" -D_RTE_ -DSTM32F405xx -DUSE_HAL_DRIVER -DSTM32F405xx-o 6-hmi\debug.o --omf_browse 6-hmi\debug.crf --depend 6-hmi\debug.d)
 I (..\User\debug.h)(0x68AAB39B)
 I (../Core/Inc/main.h)(0x68A7CCCA)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x687D92E9)
