@@ -1,6 +1,6 @@
 6-hmi\motor.o: ..\User\motor.c
-6-hmi\motor.o: E:\Keil5\ARM\ARMCC\Bin\..\include\string.h
-6-hmi\motor.o: E:\Keil5\ARM\ARMCC\Bin\..\include\stdint.h
+6-hmi\motor.o: D:\Keil\ARM\ARMCC\Bin\..\include\string.h
+6-hmi\motor.o: D:\Keil\ARM\ARMCC\Bin\..\include\stdint.h
 6-hmi\motor.o: ..\User\hmi_driver.h
 6-hmi\motor.o: ../Core/Inc/usart.h
 6-hmi\motor.o: ../Core/Inc/main.h
@@ -18,7 +18,7 @@
 6-hmi\motor.o: ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h
 6-hmi\motor.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
 6-hmi\motor.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h
-6-hmi\motor.o: E:\Keil5\ARM\ARMCC\Bin\..\include\stddef.h
+6-hmi\motor.o: D:\Keil\ARM\ARMCC\Bin\..\include\stddef.h
 6-hmi\motor.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h
 6-hmi\motor.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h
 6-hmi\motor.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h
@@ -36,7 +36,7 @@
 6-hmi\motor.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
 6-hmi\motor.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 6-hmi\motor.o: ..\User\Screen.h
-6-hmi\motor.o: E:\Keil5\ARM\ARMCC\Bin\..\include\stdio.h
+6-hmi\motor.o: D:\Keil\ARM\ARMCC\Bin\..\include\stdio.h
 6-hmi\motor.o: ..\User\cmd_queue.h
 6-hmi\motor.o: ..\User\cmd_process.h
 6-hmi\motor.o: ..\User\debug.h

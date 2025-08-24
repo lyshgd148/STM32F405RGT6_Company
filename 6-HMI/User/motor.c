@@ -163,7 +163,6 @@ void motor_AllGoHome(void) /*要小改一下*/
 	{
 		tick = 0;
 		motor_statuses[4].is_reach = 0;
-		sys_state = 1;
 	}
 	/*-----------------------------------------------------*/
 	motorGoPosition(5, 1000, 100, 8192);
@@ -171,7 +170,7 @@ void motor_AllGoHome(void) /*要小改一下*/
 	{
 		HAL_Delay(100);
 		tick++;
-		if (tick >= 300)
+		if (tick >= 200)
 		{
 			break;
 		}
@@ -261,13 +260,13 @@ void MoveFirstGMotors(uint8_t state, uint16_t speed, uint8_t acc)
 {
 	if (state == 0) // 钩子张开
 	{
-		motorGoPosition(1, speed, acc, -228000);
-		motorGoPosition(2, speed, acc, -250000);
+		motorGoPosition(1, speed, acc, -250000);
+		motorGoPosition(2, speed, acc, -228000);
 	}
 	else if (state == 1)
 	{
-		motorGoPosition(1, speed, acc, -16000);
-		motorGoPosition(2, speed, acc, -22000);
+		motorGoPosition(1, speed, acc, -22000);
+		motorGoPosition(2, speed, acc, -16000);
 	}
 }
 

@@ -164,34 +164,12 @@ void Mydebug(void)
 	}
 	else if (state_dbg == 2)
 	{
-//		motorGoHome(1);
-//		motorGoHome(2);
-//		LED_Yellow();
-//		while (motor_statuses[0].is_reach == 0 && motor_statuses[1].is_reach == 0)
-//		{
-//			HAL_Delay(100);
-//		}
-//		motor_statuses[0].is_reach = 0;
-//		motor_statuses[1].is_reach = 0;
 
-//		motorGoHome(3);
-//		motorGoHome(4);
-//		motorGoHome(5);
-//		while (motor_statuses[2].is_reach == 0 && motor_statuses[3].is_reach == 0 && motor_statuses[4].is_reach == 0)
-//		{
-//			HAL_Delay(100);
-//		}
-//		LED_Green();
-//		motor_statuses[2].is_reach = 0;
-//		motor_statuses[3].is_reach = 0;
-//		motor_statuses[4].is_reach = 0;
-
-//		SetTextFloat(2, 22, (float)(0), 1, 2);
 		motor_AllGoHome();
 		
 		firstFlag_dgb = 0;
 		secondFlag_dgb = 0;
-//		heigh_dbg = 0;
+
 		state_dbg = 0;
 		flag = 0;
 	}
