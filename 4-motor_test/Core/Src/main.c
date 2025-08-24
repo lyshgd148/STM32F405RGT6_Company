@@ -79,17 +79,39 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   HAL_GPIO_WritePin(Y6_GPIO_Port, Y6_Pin, GPIO_PIN_RESET);//yellowled_S
   HAL_Delay(1000);
-  motor_AllGoHome();
-  HAL_Delay(1000);
+
+	motorGoHome(1);
+	motorGoHome(2);
+	HAL_Delay(100);
+	motorGoHome(3);
+	motorGoHome(4);
+	HAL_Delay(100);
+	motorGoHome(5);
+
+	HAL_Delay(4000);
+
+
+//	motorGoPosition(1,1000,50,-213840);
+//	motorGoPosition(2,1000,50,-213840);
+//	HAL_Delay(100);
+//	motorGoPosition(3,1000,50,16384);
+//	motorGoPosition(4,1000,50,-16384);
+//	HAL_Delay(100);
+	motorGoPosition(5,500,50,-5010);
+	
+
+
 
   while (1)
   {
     /* USER CODE END WHILE */
     /* USER CODE BEGIN 3 */
-
-	Sys_Run(tray_num-1);
-	HAL_Delay(50);
-	HAL_GPIO_TogglePin(LED3_GPIO_Port, LED3_Pin);
+	if(motor_statuses[4].is_reach ==1)
+	{
+		HAL_GPIO_TogglePin(LED3_GPIO_Port, LED3_Pin);
+	}
+	
+	HAL_Delay(100);
   }
   /* USER CODE END 3 */
 }

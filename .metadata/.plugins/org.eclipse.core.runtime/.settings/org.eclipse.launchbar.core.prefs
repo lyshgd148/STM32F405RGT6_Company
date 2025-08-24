@@ -1,7 +1,7 @@
 LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/arch=x86_64
 LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/name=Local
 LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/os=win32
-configDescList=org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:motor Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:motor_8b_double,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:3-motor_test Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:1-motor_singal Debug
+configDescList=org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:1-motor_singal Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:motor Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:motor_8b_double,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:3-motor_test Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:motor Release,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:motor_8b Release
 eclipse.preferences.version=1
 org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:1-motor_singal\ Debug/activeLaunchMode=run
 org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:1-motor_singal\ Debug/activeLaunchTarget=null\:---

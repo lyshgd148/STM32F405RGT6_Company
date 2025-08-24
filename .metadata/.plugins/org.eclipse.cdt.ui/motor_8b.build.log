@@ -1,0 +1,10 @@
+14:28:56 **** Incremental Build of configuration Release for project motor_8b ****
+make -j8 all 
+arm-none-eabi-size  motor_8b.elf 
+   text	   data	    bss	    dec	    hex	filename
+   9512	     24	   1872	  11408	   2c90	motor_8b.elf
+Finished building: default.size.stdout
+ 
+
+14:28:56 Build Finished. 0 errors, 0 warnings. (took 407ms)
+

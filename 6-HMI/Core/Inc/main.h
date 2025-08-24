@@ -75,11 +75,11 @@ void Error_Handler(void);
 #define X1_GPIO_Port GPIOA
 #define X2_Pin GPIO_PIN_1
 #define X2_GPIO_Port GPIOA
+#define X2_EXTI_IRQn EXTI1_IRQn
 #define X3_Pin GPIO_PIN_4
 #define X3_GPIO_Port GPIOA
 #define x4_Pin GPIO_PIN_5
 #define x4_GPIO_Port GPIOA
-#define x4_EXTI_IRQn EXTI9_5_IRQn
 #define X5_Pin GPIO_PIN_6
 #define X5_GPIO_Port GPIOA
 #define X6_Pin GPIO_PIN_7

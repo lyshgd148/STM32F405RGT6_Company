@@ -72,8 +72,8 @@ extern UART_HandleTypeDef huart2;
 /*           Cortex-M4 Processor Interruption and Exception Handlers          */
 /******************************************************************************/
 /**
-  * @brief This function handles Non maskable interrupt.
-  */
+ * @brief This function handles Non maskable interrupt.
+ */
 void NMI_Handler(void)
 {
   /* USER CODE BEGIN NonMaskableInt_IRQn 0 */
@@ -87,8 +87,8 @@ void NMI_Handler(void)
 }
 
 /**
-  * @brief This function handles Hard fault interrupt.
-  */
+ * @brief This function handles Hard fault interrupt.
+ */
 void HardFault_Handler(void)
 {
   /* USER CODE BEGIN HardFault_IRQn 0 */
@@ -102,8 +102,8 @@ void HardFault_Handler(void)
 }
 
 /**
-  * @brief This function handles Memory management fault.
-  */
+ * @brief This function handles Memory management fault.
+ */
 void MemManage_Handler(void)
 {
   /* USER CODE BEGIN MemoryManagement_IRQn 0 */
@@ -117,8 +117,8 @@ void MemManage_Handler(void)
 }
 
 /**
-  * @brief This function handles Pre-fetch fault, memory access fault.
-  */
+ * @brief This function handles Pre-fetch fault, memory access fault.
+ */
 void BusFault_Handler(void)
 {
   /* USER CODE BEGIN BusFault_IRQn 0 */
@@ -132,8 +132,8 @@ void BusFault_Handler(void)
 }
 
 /**
-  * @brief This function handles Undefined instruction or illegal state.
-  */
+ * @brief This function handles Undefined instruction or illegal state.
+ */
 void UsageFault_Handler(void)
 {
   /* USER CODE BEGIN UsageFault_IRQn 0 */
@@ -147,8 +147,8 @@ void UsageFault_Handler(void)
 }
 
 /**
-  * @brief This function handles System service call via SWI instruction.
-  */
+ * @brief This function handles System service call via SWI instruction.
+ */
 void SVC_Handler(void)
 {
   /* USER CODE BEGIN SVCall_IRQn 0 */
@@ -160,8 +160,8 @@ void SVC_Handler(void)
 }
 
 /**
-  * @brief This function handles Debug monitor.
-  */
+ * @brief This function handles Debug monitor.
+ */
 void DebugMon_Handler(void)
 {
   /* USER CODE BEGIN DebugMonitor_IRQn 0 */
@@ -173,8 +173,8 @@ void DebugMon_Handler(void)
 }
 
 /**
-  * @brief This function handles Pendable request for system service.
-  */
+ * @brief This function handles Pendable request for system service.
+ */
 void PendSV_Handler(void)
 {
   /* USER CODE BEGIN PendSV_IRQn 0 */
@@ -186,8 +186,8 @@ void PendSV_Handler(void)
 }
 
 /**
-  * @brief This function handles System tick timer.
-  */
+ * @brief This function handles System tick timer.
+ */
 void SysTick_Handler(void)
 {
   /* USER CODE BEGIN SysTick_IRQn 0 */
@@ -207,8 +207,22 @@ void SysTick_Handler(void)
 /******************************************************************************/
 
 /**
-  * @brief This function handles CAN1 RX0 interrupts.
-  */
+ * @brief This function handles EXTI line1 interrupt.
+ */
+void EXTI1_IRQHandler(void)
+{
+  /* USER CODE BEGIN EXTI1_IRQn 0 */
+
+  /* USER CODE END EXTI1_IRQn 0 */
+  HAL_GPIO_EXTI_IRQHandler(X2_Pin);
+  /* USER CODE BEGIN EXTI1_IRQn 1 */
+
+  /* USER CODE END EXTI1_IRQn 1 */
+}
+
+/**
+ * @brief This function handles CAN1 RX0 interrupts.
+ */
 void CAN1_RX0_IRQHandler(void)
 {
   /* USER CODE BEGIN CAN1_RX0_IRQn 0 */
@@ -221,22 +235,8 @@ void CAN1_RX0_IRQHandler(void)
 }
 
 /**
-  * @brief This function handles EXTI line[9:5] interrupts.
-  */
-void EXTI9_5_IRQHandler(void)
-{
-  /* USER CODE BEGIN EXTI9_5_IRQn 0 */
-
-  /* USER CODE END EXTI9_5_IRQn 0 */
-  HAL_GPIO_EXTI_IRQHandler(x4_Pin);
-  /* USER CODE BEGIN EXTI9_5_IRQn 1 */
-
-  /* USER CODE END EXTI9_5_IRQn 1 */
-}
-
-/**
-  * @brief This function handles TIM2 global interrupt.
-  */
+ * @brief This function handles TIM2 global interrupt.
+ */
 void TIM2_IRQHandler(void)
 {
   /* USER CODE BEGIN TIM2_IRQn 0 */
@@ -249,8 +249,8 @@ void TIM2_IRQHandler(void)
 }
 
 /**
-  * @brief This function handles TIM3 global interrupt.
-  */
+ * @brief This function handles TIM3 global interrupt.
+ */
 void TIM3_IRQHandler(void)
 {
   /* USER CODE BEGIN TIM3_IRQn 0 */
@@ -263,14 +263,14 @@ void TIM3_IRQHandler(void)
 }
 
 /**
-  * @brief This function handles USART2 global interrupt.
-  */
+ * @brief This function handles USART2 global interrupt.
+ */
 void USART2_IRQHandler(void)
 {
   /* USER CODE BEGIN USART2_IRQn 0 */
-  if(__HAL_UART_GET_FLAG(&huart2, UART_FLAG_RXNE)!=RESET)
+  if (__HAL_UART_GET_FLAG(&huart2, UART_FLAG_RXNE) != RESET)
   {
-    uint8_t res=huart2.Instance->DR;
+    uint8_t res = huart2.Instance->DR;
     queue_push(res);
   }
   /* USER CODE END USART2_IRQn 0 */
@@ -281,8 +281,8 @@ void USART2_IRQHandler(void)
 }
 
 /**
-  * @brief This function handles TIM6 global interrupt, DAC1 and DAC2 underrun error interrupts.
-  */
+ * @brief This function handles TIM6 global interrupt, DAC1 and DAC2 underrun error interrupts.
+ */
 void TIM6_DAC_IRQHandler(void)
 {
   /* USER CODE BEGIN TIM6_DAC_IRQn 0 */
@@ -297,35 +297,47 @@ void TIM6_DAC_IRQHandler(void)
 /* USER CODE BEGIN 1 */
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
-  if (GPIO_Pin == x4_Pin)
+  if (GPIO_Pin == X2_Pin)
   {
-	if(HAL_GetTick() - last_tick < 200)  // 200ms??
-      return;
-    last_tick = HAL_GetTick();
-	
-    stop_state++;
-    if (stop_state > 1)
-      stop_state = 0;
-	
-	if(stop_state==1)
-	{
-		MySetIcon(0,21,1);
-	}
-	else if(stop_state==0)
-		MySetIcon(0,21,0);
+    if (stop_state == 1 && home_button==0)
+    {
+      if (HAL_GetTick() - last_tick < 200) // 200ms
+        return;
+      last_tick = HAL_GetTick();
+      home_button=1;
+      sys_state = 1;
+    }
   }
+
+  // if (GPIO_Pin == x4_Pin)
+  // {
+  //   if(HAL_GetTick() - last_tick < 200)  // 200ms??
+  //       return;
+  //     last_tick = HAL_GetTick();
+
+  //     stop_state++;
+  //     if (stop_state > 1)
+  //       stop_state = 0;
+
+  //   if(stop_state==1)
+  //   {
+  //     MySetIcon(0,21,1);
+  //   }
+  //   else if(stop_state==0)
+  //     MySetIcon(0,21,0);
+  // }
 }
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
-	if(htim==&htim2)
-	{
-		size = queue_find_cmd(cmd_buffer, CMD_MAX_SIZE);
-		if (size > 0 && cmd_buffer[1] != 0x07) 
-		{
-		  ProcessMessage((PCTRL_MSG)cmd_buffer, size);
-		}
-	}
+  if (htim == &htim2)
+  {
+    size = queue_find_cmd(cmd_buffer, CMD_MAX_SIZE);
+    if (size > 0 && cmd_buffer[1] != 0x07)
+    {
+      ProcessMessage((PCTRL_MSG)cmd_buffer, size);
+    }
+  }
 }
 
 /* USER CODE END 1 */

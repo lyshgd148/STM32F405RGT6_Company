@@ -29,6 +29,7 @@
 "6-hmi\screen.o"
 "6-hmi\cmd_queue.o"
 "6-hmi\hmi_driver.o"
+"6-hmi\debug.o"
 --library_type=microlib --strict --scatter "6-HMI\6-HMI.sct"
 --summary_stderr --info summarysizes --map --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

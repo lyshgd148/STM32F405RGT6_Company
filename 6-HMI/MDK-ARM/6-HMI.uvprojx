@@ -607,6 +607,11 @@
               <FileType>5</FileType>
               <FilePath>..\User\hmi_driver.h</FilePath>
             </File>
+            <File>
+              <FileName>debug.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\debug.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

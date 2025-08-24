@@ -38,3 +38,4 @@
 6-hmi\usart.o: ../User/hmi_driver.h
 6-hmi\usart.o: ../User/cmd_queue.h
 6-hmi\usart.o: ../User/cmd_process.h
+6-hmi\usart.o: ../User/debug.h

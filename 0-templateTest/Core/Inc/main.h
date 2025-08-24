@@ -66,6 +66,8 @@ void Error_Handler(void);
 #define x4_Pin GPIO_PIN_5
 #define x4_GPIO_Port GPIOA
 #define x4_EXTI_IRQn EXTI9_5_IRQn
+#define Y1_Pin GPIO_PIN_6
+#define Y1_GPIO_Port GPIOC
 
 /* USER CODE BEGIN Private defines */
 

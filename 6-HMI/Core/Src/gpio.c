@@ -83,19 +83,19 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : X1_Pin X2_Pin X3_Pin X5_Pin
+  /*Configure GPIO pins : X1_Pin X3_Pin x4_Pin X5_Pin
                            X6_Pin */
-  GPIO_InitStruct.Pin = X1_Pin|X2_Pin|X3_Pin|X5_Pin
+  GPIO_InitStruct.Pin = X1_Pin|X3_Pin|x4_Pin|X5_Pin
                           |X6_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : x4_Pin */
-  GPIO_InitStruct.Pin = x4_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING_FALLING;
+  /*Configure GPIO pin : X2_Pin */
+  GPIO_InitStruct.Pin = X2_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(x4_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(X2_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pins : X7_Pin X8_Pin */
   GPIO_InitStruct.Pin = X7_Pin|X8_Pin;
@@ -149,8 +149,8 @@ void MX_GPIO_Init(void)
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /* EXTI interrupt init*/
-  HAL_NVIC_SetPriority(EXTI9_5_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
+  HAL_NVIC_SetPriority(EXTI1_IRQn, 1, 0);
+  HAL_NVIC_EnableIRQ(EXTI1_IRQn);
 
 }
 

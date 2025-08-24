@@ -39,5 +39,6 @@
 6-hmi\motor.o: E:\Keil5\ARM\ARMCC\Bin\..\include\stdio.h
 6-hmi\motor.o: ..\User\cmd_queue.h
 6-hmi\motor.o: ..\User\cmd_process.h
+6-hmi\motor.o: ..\User\debug.h
 6-hmi\motor.o: ..\User\motor.h
 6-hmi\motor.o: ../Core/Inc/can.h

@@ -40,3 +40,4 @@
 6-hmi\stm32f4xx_it.o: ../User/Screen.h
 6-hmi\stm32f4xx_it.o: E:\Keil5\ARM\ARMCC\Bin\..\include\stdio.h
 6-hmi\stm32f4xx_it.o: ../User/cmd_process.h
+6-hmi\stm32f4xx_it.o: ../User/debug.h

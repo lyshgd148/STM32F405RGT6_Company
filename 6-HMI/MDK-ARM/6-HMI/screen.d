@@ -38,4 +38,5 @@
 6-hmi\screen.o: ../Core/Inc/usart.h
 6-hmi\screen.o: ..\User\cmd_queue.h
 6-hmi\screen.o: ..\User\cmd_process.h
+6-hmi\screen.o: ..\User\debug.h
 6-hmi\screen.o: ..\User\motor.h

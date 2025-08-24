@@ -42,3 +42,4 @@
 6-hmi\main.o: ../User/hmi_driver.h
 6-hmi\main.o: ../User/cmd_queue.h
 6-hmi\main.o: ../User/cmd_process.h
+6-hmi\main.o: ../User/debug.h
