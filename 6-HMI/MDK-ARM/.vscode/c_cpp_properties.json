@@ -3,17 +3,17 @@
         {
             "name": "6-HMI",
             "includePath": [
-                "c:\\Users\\Lys\\Desktop\\STM32F405RGT6_Company\\6-HMI\\Core\\Inc",
-                "c:\\Users\\Lys\\Desktop\\STM32F405RGT6_Company\\6-HMI\\Drivers\\STM32F4xx_HAL_Driver\\Inc",
-                "c:\\Users\\Lys\\Desktop\\STM32F405RGT6_Company\\6-HMI\\Drivers\\STM32F4xx_HAL_Driver\\Inc\\Legacy",
-                "c:\\Users\\Lys\\Desktop\\STM32F405RGT6_Company\\6-HMI\\Drivers\\CMSIS\\Device\\ST\\STM32F4xx\\Include",
-                "c:\\Users\\Lys\\Desktop\\STM32F405RGT6_Company\\6-HMI\\Drivers\\CMSIS\\Include",
-                "c:\\Users\\Lys\\Desktop\\STM32F405RGT6_Company\\6-HMI\\User",
-                "D:\\Keil\\ARM\\ARMCC\\include",
-                "D:\\Keil\\ARM\\ARMCC\\include\\rw",
-                "c:\\Users\\Lys\\Desktop\\STM32F405RGT6_Company\\6-HMI\\MDK-ARM",
-                "c:\\Users\\Lys\\Desktop\\STM32F405RGT6_Company\\6-HMI\\Core\\Src",
-                "c:\\Users\\Lys\\Desktop\\STM32F405RGT6_Company\\6-HMI\\Drivers\\STM32F4xx_HAL_Driver\\Src"
+                "f:\\STM32HAL\\6-HMI\\Core\\Inc",
+                "f:\\STM32HAL\\6-HMI\\Drivers\\STM32F4xx_HAL_Driver\\Inc",
+                "f:\\STM32HAL\\6-HMI\\Drivers\\STM32F4xx_HAL_Driver\\Inc\\Legacy",
+                "f:\\STM32HAL\\6-HMI\\Drivers\\CMSIS\\Device\\ST\\STM32F4xx\\Include",
+                "f:\\STM32HAL\\6-HMI\\Drivers\\CMSIS\\Include",
+                "f:\\STM32HAL\\6-HMI\\User",
+                "E:\\Keil5\\ARM\\ARMCC\\include",
+                "E:\\Keil5\\ARM\\ARMCC\\include\\rw",
+                "f:\\STM32HAL\\6-HMI\\MDK-ARM",
+                "f:\\STM32HAL\\6-HMI\\Core\\Src",
+                "f:\\STM32HAL\\6-HMI\\Drivers\\STM32F4xx_HAL_Driver\\Src"
             ],
             "defines": [
                 "USE_HAL_DRIVER",

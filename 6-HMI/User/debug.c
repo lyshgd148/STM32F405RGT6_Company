@@ -156,8 +156,8 @@ void Mydebug(void)
 			LED_Red();
 		else
 			LED_Green();
-		
-		SetTextFloat(2, 22, (float)(heigh_dbg / 10.0), 1, 2);
+			
+		SetTextInt32(2,22,heigh_dbg,1,3);
 		motor_statuses[4].is_reach = 0;
 		state_dbg = 0;
 		flag = 1;

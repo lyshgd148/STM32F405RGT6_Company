@@ -86,16 +86,15 @@ int main(void)
 	HAL_TIM_Base_Start_IT(&htim2);
 
 	Motor_Init();
+	SetButtonValue(0, 2, 0);
+	LED_Yellow();
 	HAL_Delay(1000); // ��ʼ�������ʱ�����
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
-	SetButtonValue(0, 2, 0);
-	MySetIcon(0, 3, 0);
+
 	HAL_Delay(100);
-	MySetIcon(0, 20, 0);
-	MySetIcon(0, 4, 0);
 	motor_AllGoHome();
 
 	HAL_GPIO_WritePin(Y6_GPIO_Port, Y6_Pin, GPIO_PIN_RESET);
@@ -105,7 +104,6 @@ int main(void)
 		/* USER CODE END WHILE */
 
 		/* USER CODE BEGIN 3 */
-		HAL_Delay(1000);
 		while (updateFlag != 1)
 		{
 			if (home_button == 1)
@@ -142,9 +140,6 @@ int main(void)
 		}
 
 		SetButtonValue(0, 2, 0);
-		MySetIcon(0, 4, 0);
-		MySetIcon(0, 3, 0);
-		MySetIcon(0, 20, 0);
 
 		updateFlag = 0;
 #if dbg

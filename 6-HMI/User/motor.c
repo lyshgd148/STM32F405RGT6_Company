@@ -145,51 +145,51 @@ void motor_AllGoHome(void) /*要小改一下*/
 	}
 	HAL_Delay(100);
 	/*----------------------------------------------------------------------------------*/
-	motorGoHome(5);
-	while (motor_statuses[4].is_reach == 0)
-	{
-		HAL_Delay(100);
-		tick++;
-		if (tick >= 1500)
-		{
-			break;
-		}
-	}
-	if (motor_statuses[4].is_reach == 0)
-	{
-		/*错误处理*/
-	}
-	else
-	{
-		tick = 0;
-		motor_statuses[4].is_reach = 0;
-	}
-	/*-----------------------------------------------------*/
-	motorGoPosition(5, 1000, 100, 8192);
-	while (motor_statuses[4].is_reach == 0)
-	{
-		HAL_Delay(100);
-		tick++;
-		if (tick >= 200)
-		{
-			break;
-		}
-	}
-	if (motor_statuses[4].is_reach == 0)
-	{
-		/*错误处理*/
-	}
-	else
-	{
-		tick = 0;
-		motor_statuses[4].is_reach = 0;
-		sys_state = 1;
-	}
+//	motorGoHome(5);
+//	while (motor_statuses[4].is_reach == 0)
+//	{
+//		HAL_Delay(100);
+//		tick++;
+//		if (tick >= 1500)
+//		{
+//			break;
+//		}
+//	}
+//	if (motor_statuses[4].is_reach == 0)
+//	{
+//		/*错误处理*/
+//	}
+//	else
+//	{
+//		tick = 0;
+//		motor_statuses[4].is_reach = 0;
+//	}
+//	/*-----------------------------------------------------*/
+//	motorGoPosition(5, 1000, 100, 8192);
+//	while (motor_statuses[4].is_reach == 0)
+//	{
+//		HAL_Delay(100);
+//		tick++;
+//		if (tick >= 200)
+//		{
+//			break;
+//		}
+//	}
+//	if (motor_statuses[4].is_reach == 0)
+//	{
+//		/*错误处理*/
+//	}
+//	else
+//	{
+//		tick = 0;
+//		motor_statuses[4].is_reach = 0;
+//		sys_state = 1;
+//	}
 	LED_Green();
 #if dbg
 	goHomeFlag_dbg = 1;
-	heigh_dbg = 8192 / 16384;
-	SetTextFloat(2, 22, (float)(heigh_dbg / 10), 1, 2);
+	heigh_dbg = 8192*10 / 16384;
+	SetTextInt32(2,22,heigh_dbg,1,3);
 #endif
 }
 
@@ -260,8 +260,8 @@ void MoveFirstGMotors(uint8_t state, uint16_t speed, uint8_t acc)
 {
 	if (state == 0) // 钩子张开
 	{
-		motorGoPosition(1, speed, acc, -250000);
-		motorGoPosition(2, speed, acc, -228000);
+		motorGoPosition(1, speed, acc, -245000);
+		motorGoPosition(2, speed, acc, -235000);
 	}
 	else if (state == 1)
 	{
@@ -656,7 +656,7 @@ uint8_t PutDownMaterial(uint8_t num) // 放第num盘料
 	tick = 0;
 	while (motor_statuses[4].is_reach == 0)
 	{
-		MoveFifthMotor(2500, 180, PutDown_position[num]);
+		MoveFifthMotor(500, 50, PutDown_position[num]);
 		while (motor_statuses[4].is_reach != 1)
 		{
 

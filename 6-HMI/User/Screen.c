@@ -169,7 +169,7 @@ void NotifyText(uint16 screen_id, uint16 control_id, uint8 *strs)
 		}
 		else if (control_id == 24 && hookR_flag == 0 && hookL_flag == 0 && arm_flag == 0 && hook_flag == 0) // 右钩子
 		{
-			hookR_angle = 22000 + 2533.33 * value;
+			hookR_angle = 22000 + 2477.78 * value;
 			hookR_flag = 1;
 		}
 		else if (control_id == 28 && hookR_flag == 0 && hookL_flag == 0 && arm_flag == 0 && hook_flag == 0) // 左钩子
@@ -179,8 +179,8 @@ void NotifyText(uint16 screen_id, uint16 control_id, uint8 *strs)
 		}
 		else if (control_id == 30 && hookR_flag == 0 && hookL_flag == 0 && arm_flag == 0 && hook_flag == 0) // 所有钩子
 		{
-			hookR_angle = 22000 + 2533.33 * value;
-			hookL_angle = 16000 + 2355.56 * value;
+			hookR_angle = 22000 + 2477.78 * value;
+			hookL_angle = 16000 + 2433.33 * value;
 			hook_flag = 1;
 		}
 		else if (control_id == 25 && hookR_flag == 0 && hookL_flag == 0 && arm_flag == 0 && hook_flag == 0) // 手臂
