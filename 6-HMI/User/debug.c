@@ -23,6 +23,9 @@ uint8_t hookR_flag = 0;
 uint8_t arm_flag = 0;
 extern uint8_t flag;
 
+int8_t x1=0;   //Ã«Å÷ÅÌ²ãÆ«
+int8_t x2=0;   //³ÉÆ·ÅÌ²ãÆ«
+
 
 
 void Mydebug(void)
@@ -208,7 +211,7 @@ void Mydebug(void)
 		tick=0;
 		err=0;
 		
-		MoveSecondGMotors(secondFlag_dgb, 500, 50);
+		MoveSecondGMotors(secondFlag_dgb, 500, 50,0);
 		LED_Yellow();
 		while (motor_statuses[2].is_reach == 0 && motor_statuses[3].is_reach == 0)
 		{

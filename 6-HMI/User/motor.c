@@ -226,7 +226,8 @@ void Tray_posInit(uint32_t tray_offset, uint32_t heigh) // 料盘位置初始化
 	uint8_t i;
 	int32_t t_off = tray_offset * 16384 / lead_screw;
 	int32_t h = heigh * 16384 / lead_screw;
-
+	
+	
 	for (i = tray_num; i > 1; i--)
 	{
 		tray_position[i - 1] = t_off + ((i - 2) * h);
@@ -270,17 +271,34 @@ void MoveFirstGMotors(uint8_t state, uint16_t speed, uint8_t acc)
 	}
 }
 
-void MoveSecondGMotors(uint8_t state, uint16_t speed, uint8_t acc)
+void MoveSecondGMotors(uint8_t state, uint16_t speed, uint8_t acc,uint8_t num)
 {
+	#if dbg
+		int32_t X1=x1*16384*(num-1)/90;
+		int32_t X2=x2*16384*(num-1)/90;
+	#endif
+	
 	if (state == 0) // 小臂前伸到放料处 465，467
-	{
-		motorGoPosition(3, speed, acc, 84651);
-		motorGoPosition(4, speed, acc, -85015);
+	{	
+		#if dbg
+			motorGoPosition(3, speed, acc, 84651+X2);
+			motorGoPosition(4, speed, acc, -(85015+X2));
+		#else
+			motorGoPosition(3, speed, acc, 84651);
+			motorGoPosition(4, speed, acc, -85015);
+		#endif
+		
 	}
 	else if (state == 1)// 小臂前伸到取料处
 	{
+		#if dbg
+		motorGoPosition(3, speed, acc, 910+X1);
+		motorGoPosition(4, speed, acc, -(1274+X1));
+		#else
 		motorGoPosition(3, speed, acc, 910);
 		motorGoPosition(4, speed, acc, -1274);
+		#endif
+		
 	}
 }
 
@@ -301,7 +319,7 @@ uint8_t GetMaterial(uint8_t num) // 去取num盘料
 	/*-----------------------整体升降到料盘处-----------------------------*/
 	while (motor_statuses[4].is_reach == 0)
 	{
-		MoveFifthMotor(2500, 180, tray_position[num]);
+		MoveFifthMotor(500, 50, tray_position[num]);
 		while (motor_statuses[4].is_reach != 1)
 		{
 			tick += 1;
@@ -345,7 +363,7 @@ uint8_t GetMaterial(uint8_t num) // 去取num盘料
 	tick = 0;
 	while (motor_statuses[2].is_reach == 0 || motor_statuses[3].is_reach == 0)
 	{
-		MoveSecondGMotors(1, 1000, 50);
+		MoveSecondGMotors(1, 1000, 50,num);
 		while (motor_statuses[2].is_reach != 1 || motor_statuses[3].is_reach != 1)
 		{
 
@@ -431,7 +449,7 @@ uint8_t GetMaterial(uint8_t num) // 去取num盘料
 //	/*-----------------------整体升降到料盘上方-----------------------------*/
 //	while (motor_statuses[4].is_reach == 0)
 //	{
-//		MoveFifthMotor(2500, 180, (int32_t)(tray_position[num]+heigh*1.2 * 16384 / lead_screw));
+//		MoveFifthMotor(500, 50, (int32_t)(tray_position[num]+heigh*1.2 * 16384 / lead_screw));
 //		while (motor_statuses[4].is_reach != 1)
 //		{
 //			tick += 1;
@@ -518,7 +536,7 @@ uint8_t GetMaterial(uint8_t num) // 去取num盘料
 	tick = 0;
 	while (motor_statuses[4].is_reach == 0)
 	{
-		MoveFifthMotor(2500, 180, tray_position[0]);
+		MoveFifthMotor(500, 50, tray_position[0]);
 		while (motor_statuses[4].is_reach != 1)
 		{
 
@@ -569,7 +587,7 @@ uint8_t PutDownMaterial(uint8_t num) // 放第num盘料
 	/*---------------------------整体降到放料最高点-------------------------*/
 	while (motor_statuses[4].is_reach == 0)
 	{
-		MoveFifthMotor(2500, 180, PutDown_position[0]);
+		MoveFifthMotor(500, 50, PutDown_position[0]);
 		while (motor_statuses[4].is_reach != 1)
 		{
 			tick += 1;
@@ -613,7 +631,8 @@ uint8_t PutDownMaterial(uint8_t num) // 放第num盘料
 	tick = 0;
 	while (motor_statuses[2].is_reach == 0 || motor_statuses[3].is_reach == 0)
 	{
-		MoveSecondGMotors(0, 1000, 50);
+		MoveSecondGMotors(0, 1000, 50,num);
+		
 		while (motor_statuses[2].is_reach != 1 || motor_statuses[3].is_reach != 1)
 		{
 
@@ -744,7 +763,7 @@ uint8_t PutDownMaterial(uint8_t num) // 放第num盘料
 	tick = 0;
 	while (motor_statuses[2].is_reach == 0 || motor_statuses[3].is_reach == 0)
 	{
-		MoveSecondGMotors(1, 1000, 50);
+		MoveSecondGMotors(1, 1000, 50,num);
 		while (motor_statuses[2].is_reach != 1 || motor_statuses[3].is_reach != 1)
 		{
 

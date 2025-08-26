@@ -188,6 +188,15 @@ void NotifyText(uint16 screen_id, uint16 control_id, uint8 *strs)
 			arm_length = value * 16384 / 90;
 			arm_flag = 1;
 		}
+		
+		else if (control_id == 32)
+		{
+			x1=value;
+		}
+		else if (control_id == 35)
+		{
+			x2=value;
+		}
 	}
 #endif
 }
@@ -195,10 +204,16 @@ void NotifyText(uint16 screen_id, uint16 control_id, uint8 *strs)
 void MyGetTextValue(void) // 获取4个文本输入框的值
 {
 	GetControlValue(0, 9);
-	HAL_Delay(150);
+	HAL_Delay(50);
 	GetControlValue(0, 10);
-	HAL_Delay(150);
+	HAL_Delay(50);
 	GetControlValue(0, 11);
-	HAL_Delay(150);
+	HAL_Delay(50);
 	GetControlValue(0, 12);
+	HAL_Delay(50);
+	#if dbg
+	GetControlValue(2, 32);
+	HAL_Delay(50);
+	GetControlValue(2, 35);
+	#endif
 }

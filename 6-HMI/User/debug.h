@@ -21,6 +21,10 @@ extern uint8_t hookL_flag;
 extern uint8_t hookR_flag;
 extern uint8_t arm_flag;
 
+extern int8_t x1;   
+extern int8_t x2;
+
+
 void Mydebug(void);
 #endif
 

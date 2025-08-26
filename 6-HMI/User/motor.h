@@ -41,7 +41,7 @@ void Tray_posInit(uint32_t tray_offset, uint32_t heigh);                        
 void PutDown_posInit(uint32_t PutDown_offset, uint32_t heigh);                     // 料盘放置位置初始化 PutDown_offset:第一层位置(单位mm) heigh:每层高度(单位 mm)
 
 void MoveFirstGMotors(uint8_t state, uint16_t speed, uint8_t acc);  // 移动第一组电机
-void MoveSecondGMotors(uint8_t state, uint16_t speed, uint8_t acc); // 移动第二组电机
+void MoveSecondGMotors(uint8_t state, uint16_t speed, uint8_t acc,uint8_t num); // 移动第二组电机
 void MoveFifthMotor(uint16_t speed, uint8_t acc, int32_t pos);      // 移动第五个电机
 uint8_t GetMaterial(uint8_t num);                                   // 去取num盘料  返回非0 失败
 uint8_t PutDownMaterial(uint8_t num);                               // 放第num盘料  返回非0 失败
