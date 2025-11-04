@@ -553,9 +553,53 @@
         </Group>
         <Group>
           <GroupName>filter</GroupName>
+          <Files>
+            <File>
+              <FileName>filter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Filter\filter.c</FilePath>
+            </File>
+            <File>
+              <FileName>filter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Filter\filter.h</FilePath>
+            </File>
+          </Files>
         </Group>
         <Group>
           <GroupName>motor</GroupName>
+          <Files>
+            <File>
+              <FileName>global_def.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Motor\global_def.h</FilePath>
+            </File>
+            <File>
+              <FileName>conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Motor\conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>motor_runtime_param.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Motor\motor_runtime_param.c</FilePath>
+            </File>
+            <File>
+              <FileName>motor_runtime_param.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Motor\motor_runtime_param.h</FilePath>
+            </File>
+            <File>
+              <FileName>foc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Motor\foc.c</FilePath>
+            </File>
+            <File>
+              <FileName>foc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Motor\foc.h</FilePath>
+            </File>
+          </Files>
         </Group>
         <Group>
           <GroupName>::CMSIS</GroupName>
