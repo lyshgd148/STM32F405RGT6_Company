@@ -95,7 +95,7 @@ int main(void)
 	/* USER CODE BEGIN WHILE */
 
 	HAL_Delay(100);
-//	motor_AllGoHome();
+	motor_AllGoHome();
 
 	HAL_GPIO_WritePin(Y6_GPIO_Port, Y6_Pin, GPIO_PIN_RESET);
 
@@ -123,8 +123,8 @@ int main(void)
 #endif
 		if (flag != 0)
 		{
-//			if (tray_num != 1)
-//				motor_AllGoHome();
+			if (tray_num != 1)
+				motor_AllGoHome();
 		}
 
 		MyGetTextValue();
@@ -135,8 +135,8 @@ int main(void)
 		{
 			SetTextInt32(0, 23, 0, 0, 2);
 			HAL_Delay(2500);
-//			if (tray_num != 1)
-//				motor_AllGoHome();
+			if (tray_num != 1)
+				motor_AllGoHome();
 		}
 
 		SetButtonValue(0, 2, 0);

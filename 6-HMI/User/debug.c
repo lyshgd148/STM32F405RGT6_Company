@@ -23,8 +23,8 @@ uint8_t hookR_flag = 0;
 uint8_t arm_flag = 0;
 extern uint8_t flag;
 
-int8_t x1=0;   //Ã«Å÷ÅÌ²ãÆ«
-int8_t x2=0;   //³ÉÆ·ÅÌ²ãÆ«
+int8_t x1=0;   //Ã«ï¿½ï¿½ï¿½Ì²ï¿½Æ«
+int8_t x2=0;   //ï¿½ï¿½Æ·ï¿½Ì²ï¿½Æ«
 
 
 
@@ -114,8 +114,8 @@ void Mydebug(void)
 		tick=0;
 		err=0;
 		
-		motorGoPosition(3, 1000, 150, arm_length);
-		motorGoPosition(4, 1000, 150, -1 * arm_length-364);
+		motorGoPosition(3, 300, 30, arm_length+546+364);
+		motorGoPosition(4, 300, 30, -1 * arm_length-364-273-46-364);
 		LED_Yellow();
 		while (motor_statuses[2].is_reach == 0 || motor_statuses[3].is_reach == 0)
 		{
@@ -143,7 +143,7 @@ void Mydebug(void)
 		tick=0;
 		err=0;
 		
-		MoveFifthMotor(1000, 100, heigh_dbg * 16384 / lead_screw);
+		MoveFifthMotor(300, 30, heigh_dbg * 16384 / lead_screw);
 		LED_Yellow();
 		while (motor_statuses[4].is_reach == 0)
 		{
@@ -176,65 +176,65 @@ void Mydebug(void)
 		state_dbg = 0;
 		flag = 0;
 	}
-	else if (state_dbg == 4)
-	{
-		tick=0;
-		err=0;
-		MoveFirstGMotors(firstFlag_dgb, 500, 50);
-		LED_Yellow();
-		while (motor_statuses[0].is_reach == 0 && motor_statuses[1].is_reach == 0)
-		{
-			tick++;
-			if(tick>601)
-			{
-				err=1;
-				break;
-			}
-			HAL_Delay(100);
-		}
-		if(err==1)
-			LED_Red();
-		else
-			LED_Green();
+	// else if (state_dbg == 4)
+	// {
+	// 	tick=0;
+	// 	err=0;
+	// 	MoveFirstGMotors(firstFlag_dgb, 500, 50);
+	// 	LED_Yellow();
+	// 	while (motor_statuses[0].is_reach == 0 && motor_statuses[1].is_reach == 0)
+	// 	{
+	// 		tick++;
+	// 		if(tick>601)
+	// 		{
+	// 			err=1;
+	// 			break;
+	// 		}
+	// 		HAL_Delay(100);
+	// 	}
+	// 	if(err==1)
+	// 		LED_Red();
+	// 	else
+	// 		LED_Green();
 		
-		motor_statuses[0].is_reach = 0;
-		motor_statuses[1].is_reach = 0;
+	// 	motor_statuses[0].is_reach = 0;
+	// 	motor_statuses[1].is_reach = 0;
 		
-		firstFlag_dgb++;
-		firstFlag_dgb%=2;
+	// 	firstFlag_dgb++;
+	// 	firstFlag_dgb%=2;
 		
-		state_dbg = 0;
-		flag = 1;
-	}
-	else if (state_dbg == 5)
-	{
-		tick=0;
-		err=0;
+	// 	state_dbg = 0;
+	// 	flag = 1;
+	// }
+	// else if (state_dbg == 5)
+	// {
+	// 	tick=0;
+	// 	err=0;
 		
-		MoveSecondGMotors(secondFlag_dgb, 500, 50,0);
-		LED_Yellow();
-		while (motor_statuses[2].is_reach == 0 && motor_statuses[3].is_reach == 0)
-		{
-			tick++;
-			if(tick>601)
-			{
-				err=1;
-				break;
-			}
-			HAL_Delay(100);
-		}
-		if(err==1) 
-			LED_Red();
-		else
-			LED_Green();
-		motor_statuses[2].is_reach = 0;
-		motor_statuses[3].is_reach = 0;
+	// 	MoveSecondGMotors(secondFlag_dgb, 500, 50,0);
+	// 	LED_Yellow();
+	// 	while (motor_statuses[2].is_reach == 0 && motor_statuses[3].is_reach == 0)
+	// 	{
+	// 		tick++;
+	// 		if(tick>601)
+	// 		{
+	// 			err=1;
+	// 			break;
+	// 		}
+	// 		HAL_Delay(100);
+	// 	}
+	// 	if(err==1) 
+	// 		LED_Red();
+	// 	else
+	// 		LED_Green();
+	// 	motor_statuses[2].is_reach = 0;
+	// 	motor_statuses[3].is_reach = 0;
 		
-		secondFlag_dgb++;
-		secondFlag_dgb%=2;
+	// 	secondFlag_dgb++;
+	// 	secondFlag_dgb%=2;
 		
-		state_dbg = 0;
-		flag = 1;
-	}
+	// 	state_dbg = 0;
+	// 	flag = 1;
+	// }
 }
 #endif

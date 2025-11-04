@@ -99,10 +99,11 @@ void NotifyButton(uint16 screen_id, uint16 control_id, uint8 state)
 
 void NotifyText(uint16 screen_id, uint16 control_id, uint8 *strs)
 {
-	int32 value = 0;
-	sscanf((const char *)strs, "%ld", &value); // 只取整数 输入小数会截断
+
 	if (screen_id == 0)
 	{
+		int32 value = 0;
+		sscanf((const char *)strs, "%ld", &value); // 只取整数 输入小数会截断
 		if (control_id == 9)
 		{
 			if ((tray_offset + (value - 2) * heigh) > Max_Length || (PutDown_offset + (value - 2) * heigh + heigh / 4) > Max_Length)
@@ -163,13 +164,15 @@ void NotifyText(uint16 screen_id, uint16 control_id, uint8 *strs)
 #if dbg
 	if (screen_id == 2)
 	{
+		double value = 0;
+		sscanf((const char *)strs, "%lf", &value);
 		if (control_id == 17)
 		{
 			heigh_dbg_single = value;
 		}
 		else if (control_id == 24 && hookR_flag == 0 && hookL_flag == 0 && arm_flag == 0 && hook_flag == 0) // 右钩子
 		{
-			hookR_angle = 22000 + 2477.78 * value;
+			hookR_angle = 22000 + 2422.72 * value;
 			hookR_flag = 1;
 		}
 		else if (control_id == 28 && hookR_flag == 0 && hookL_flag == 0 && arm_flag == 0 && hook_flag == 0) // 左钩子
@@ -179,7 +182,7 @@ void NotifyText(uint16 screen_id, uint16 control_id, uint8 *strs)
 		}
 		else if (control_id == 30 && hookR_flag == 0 && hookL_flag == 0 && arm_flag == 0 && hook_flag == 0) // 所有钩子
 		{
-			hookR_angle = 22000 + 2477.78 * value;
+			hookR_angle = 22000 + 2422.72 * value;
 			hookL_angle = 16000 + 2433.33 * value;
 			hook_flag = 1;
 		}
@@ -188,14 +191,14 @@ void NotifyText(uint16 screen_id, uint16 control_id, uint8 *strs)
 			arm_length = value * 16384 / 90;
 			arm_flag = 1;
 		}
-		
+
 		else if (control_id == 32)
 		{
-			x1=value;
+			x1 = value;
 		}
 		else if (control_id == 35)
 		{
-			x2=value;
+			x2 = value;
 		}
 	}
 #endif
@@ -211,9 +214,9 @@ void MyGetTextValue(void) // 获取4个文本输入框的值
 	HAL_Delay(50);
 	GetControlValue(0, 12);
 	HAL_Delay(50);
-	#if dbg
+#if dbg
 	GetControlValue(2, 32);
 	HAL_Delay(50);
 	GetControlValue(2, 35);
-	#endif
+#endif
 }

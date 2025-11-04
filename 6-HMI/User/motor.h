@@ -7,7 +7,7 @@
 #define lead_screw 10
 // 大丝杠导程,单位:mm
 #define Max_tray_num 100 // 最大层数
-#define Max_Length 800   // 最大行程 也就是机器人取料点
+#define Max_Length 860   // 最大行程 也就是机器人取料点
 
 typedef struct
 {
