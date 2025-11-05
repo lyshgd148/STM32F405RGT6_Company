@@ -34,7 +34,20 @@ void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi)
   {
     HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET); // 结束通信，拉高CS
     int angle_raw = (mt6701_rx_data[1] >> 2) | (mt6701_rx_data[0] << 6);
-    encoder_angle = 2 * 3.1415926 * angle_raw / ((1 << 14) - 1); // 数据手册看公式
+    encoder_angle = 2 * 3.1415926 * angle_raw / ((1 << 14) - 1); // 14位分辨率
+
+    static int once = 1;
+    static float encoder_angle_last = 0;
+    if (once)
+    {
+      once = !once;
+      rotor_zero_angle = encoder_angle;
+    }
+
+    float diff_angle = cycle_diff(encoder_angle - encoder_angle_last, 2 * PI);
+    encoder_angle_last=encoder_angle;
+
+    motor_logical_angle=cycle_diff(motor_logical_angle + diff_angle, position_cycle);
 
     HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
     HAL_SPI_TransmitReceive_DMA(&hspi1, mt6701_rx_data, mt6701_rx_data, 3);
@@ -91,17 +104,18 @@ void MX_SPI1_Init(void)
   /* USER CODE BEGIN SPI1_Init 2 */
 
   /* USER CODE END SPI1_Init 2 */
+
 }
 
-void HAL_SPI_MspInit(SPI_HandleTypeDef *spiHandle)
+void HAL_SPI_MspInit(SPI_HandleTypeDef* spiHandle)
 {
 
   GPIO_InitTypeDef GPIO_InitStruct = {0};
-  if (spiHandle->Instance == SPI1)
+  if(spiHandle->Instance==SPI1)
   {
-    /* USER CODE BEGIN SPI1_MspInit 0 */
+  /* USER CODE BEGIN SPI1_MspInit 0 */
 
-    /* USER CODE END SPI1_MspInit 0 */
+  /* USER CODE END SPI1_MspInit 0 */
     /* SPI1 clock enable */
     __HAL_RCC_SPI1_CLK_ENABLE();
 
@@ -111,7 +125,7 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef *spiHandle)
     PA6     ------> SPI1_MISO
     PA7     ------> SPI1_MOSI
     */
-    GPIO_InitStruct.Pin = GPIO_PIN_5 | GPIO_PIN_7;
+    GPIO_InitStruct.Pin = GPIO_PIN_5|GPIO_PIN_7;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
@@ -136,7 +150,7 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef *spiHandle)
       Error_Handler();
     }
 
-    __HAL_LINKDMA(spiHandle, hdmarx, hdma_spi1_rx);
+    __HAL_LINKDMA(spiHandle,hdmarx,hdma_spi1_rx);
 
     /* SPI1_TX Init */
     hdma_spi1_tx.Instance = DMA1_Channel3;
@@ -152,22 +166,22 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef *spiHandle)
       Error_Handler();
     }
 
-    __HAL_LINKDMA(spiHandle, hdmatx, hdma_spi1_tx);
+    __HAL_LINKDMA(spiHandle,hdmatx,hdma_spi1_tx);
 
-    /* USER CODE BEGIN SPI1_MspInit 1 */
+  /* USER CODE BEGIN SPI1_MspInit 1 */
 
-    /* USER CODE END SPI1_MspInit 1 */
+  /* USER CODE END SPI1_MspInit 1 */
   }
 }
 
-void HAL_SPI_MspDeInit(SPI_HandleTypeDef *spiHandle)
+void HAL_SPI_MspDeInit(SPI_HandleTypeDef* spiHandle)
 {
 
-  if (spiHandle->Instance == SPI1)
+  if(spiHandle->Instance==SPI1)
   {
-    /* USER CODE BEGIN SPI1_MspDeInit 0 */
+  /* USER CODE BEGIN SPI1_MspDeInit 0 */
 
-    /* USER CODE END SPI1_MspDeInit 0 */
+  /* USER CODE END SPI1_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_SPI1_CLK_DISABLE();
 
@@ -176,14 +190,14 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef *spiHandle)
     PA6     ------> SPI1_MISO
     PA7     ------> SPI1_MOSI
     */
-    HAL_GPIO_DeInit(GPIOA, GPIO_PIN_5 | GPIO_PIN_6 | GPIO_PIN_7);
+    HAL_GPIO_DeInit(GPIOA, GPIO_PIN_5|GPIO_PIN_6|GPIO_PIN_7);
 
     /* SPI1 DMA DeInit */
     HAL_DMA_DeInit(spiHandle->hdmarx);
     HAL_DMA_DeInit(spiHandle->hdmatx);
-    /* USER CODE BEGIN SPI1_MspDeInit 1 */
+  /* USER CODE BEGIN SPI1_MspDeInit 1 */
 
-    /* USER CODE END SPI1_MspDeInit 1 */
+  /* USER CODE END SPI1_MspDeInit 1 */
   }
 }
 

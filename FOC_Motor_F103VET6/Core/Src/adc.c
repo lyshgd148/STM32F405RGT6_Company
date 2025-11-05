@@ -1,27 +1,78 @@
 /* USER CODE BEGIN Header */
 /**
-  ******************************************************************************
-  * @file    adc.c
-  * @brief   This file provides code for the configuration
-  *          of the ADC instances.
-  ******************************************************************************
-  * @attention
-  *
-  * Copyright (c) 2025 STMicroelectronics.
-  * All rights reserved.
-  *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
-  *
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * @file    adc.c
+ * @brief   This file provides code for the configuration
+ *          of the ADC instances.
+ ******************************************************************************
+ * @attention
+ *
+ * Copyright (c) 2025 STMicroelectronics.
+ * All rights reserved.
+ *
+ * This software is licensed under terms that can be found in the LICENSE file
+ * in the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
+ *
+ ******************************************************************************
+ */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "adc.h"
 
 /* USER CODE BEGIN 0 */
+#include "motor_runtime_param.h"
+#include "foc.h"
+#include "filter.h"
+#include "global_def.h"
+#include "arm_math.h"
 
+void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef *hadc)
+{
+  if (hadc->Instance == ADC1)
+  {
+    float u_1 = ADC_REFERENCE_VOLTAGE * (((float)HAL_ADCEx_InjectedGetValue(&hadc1, ADC_INJECTED_RANK_1) / ((1 << ADC_BITS) - 1) - 0.5));
+    float u_2 = ADC_REFERENCE_VOLTAGE * (((float)HAL_ADCEx_InjectedGetValue(&hadc2, ADC_INJECTED_RANK_1) / ((1 << ADC_BITS) - 1) - 0.5));
+    float i_1 = u_1 / R_SHUNT / OP_GAIN;
+    float i_2 = u_2 / R_SHUNT / OP_GAIN;
+    motor_i_u = i_1;
+    motor_i_v = i_2;
+
+    float i_alpha = 0;
+    float i_beta = 0;
+
+    arm_clarke_f32(motor_i_u, motor_i_v, &i_alpha, &i_beta);
+    float sin_value = arm_sin_f32(rotor_logical_angle);
+    float cos_value = arm_cos_f32(rotor_logical_angle);
+    float _motor_i_d = 0;
+    float _motor_i_q = 0;
+    arm_park_f32(i_alpha, i_beta, &_motor_i_d, &_motor_i_q, sin_value, cos_value);
+
+    float filtered_alpha_i_d = 0.1;
+    float filtered_alpha_i_q = 0.1;
+
+    motor_i_d = LFP(_motor_i_d, motor_i_d, filtered_alpha_i_d);
+    motor_i_q = LFP(_motor_i_q, motor_i_q, filtered_alpha_i_q);
+
+    switch (motor_control_context.type)
+    {
+    case control_type_position:
+      lib_position_control(motor_control_context.position);
+      break;
+    case control_type_speed:
+      lib_speed_control(motor_control_context.speed);
+      break;
+    case control_type_torque:
+      lib_torque_control(motor_control_context.torque_norm_d, motor_control_context.torque_norm_q);
+      break;
+    case control_type_position_speed_torque:
+      lib_position_speed_torque_control(motor_control_context.position, motor_control_context.max_speed, motor_control_context.max_torque_norm);
+      break;
+    default:
+      break;
+    }
+  }
+}
 /* USER CODE END 0 */
 
 ADC_HandleTypeDef hadc1;
@@ -201,9 +252,9 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
     /* ADC1 interrupt Deinit */
   /* USER CODE BEGIN ADC1:ADC1_2_IRQn disable */
     /**
-    * Uncomment the line below to disable the "ADC1_2_IRQn" interrupt
-    * Be aware, disabling shared interrupt may affect other IPs
-    */
+     * Uncomment the line below to disable the "ADC1_2_IRQn" interrupt
+     * Be aware, disabling shared interrupt may affect other IPs
+     */
     /* HAL_NVIC_DisableIRQ(ADC1_2_IRQn); */
   /* USER CODE END ADC1:ADC1_2_IRQn disable */
 
@@ -227,9 +278,9 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
     /* ADC2 interrupt Deinit */
   /* USER CODE BEGIN ADC2:ADC1_2_IRQn disable */
     /**
-    * Uncomment the line below to disable the "ADC1_2_IRQn" interrupt
-    * Be aware, disabling shared interrupt may affect other IPs
-    */
+     * Uncomment the line below to disable the "ADC1_2_IRQn" interrupt
+     * Be aware, disabling shared interrupt may affect other IPs
+     */
     /* HAL_NVIC_DisableIRQ(ADC1_2_IRQn); */
   /* USER CODE END ADC2:ADC1_2_IRQn disable */
 

@@ -1,7 +1,7 @@
 #include "motor_runtime_param.h"
 
-float motor_current_i_u;
-float motor_current_i_v;
+float motor_i_u;
+float motor_i_v;
 
 float motor_i_d;
 float motor_i_q;

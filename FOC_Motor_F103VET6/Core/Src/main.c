@@ -30,6 +30,7 @@
 #include "stdio.h"
 #include "global_def.h"
 #include "foc.h"
+#include "motor_runtime_param.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -81,9 +82,9 @@ void set_pwm_duty(float d_u, float d_v, float d_w)
 /* USER CODE END 0 */
 
 /**
- * @brief  The application entry point.
- * @retval int
- */
+  * @brief  The application entry point.
+  * @retval int
+  */
 int main(void)
 {
 
@@ -117,6 +118,11 @@ int main(void)
   MX_TIM1_Init();
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
+  set_motor_pid(0, 0, 0,
+                0, 0, 0,
+                0, 0, 0,
+                0, 0, 0);
+
   extern uint8_t mt6701_rx_data[3];
   HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
   HAL_SPI_TransmitReceive_DMA(&hspi1, mt6701_rx_data, mt6701_rx_data, 3);
@@ -127,6 +133,18 @@ int main(void)
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3);
 
   HAL_TIM_Base_Start_IT(&htim3);
+
+  HAL_ADCEx_Calibration_Start(&hadc1);
+  HAL_ADCEx_Calibration_Start(&hadc2);
+  HAL_ADCEx_InjectedStart_IT(&hadc1);
+  HAL_ADCEx_InjectedStart(&hadc2);
+
+  set_pwm_duty(0.5, 0.0, 0.0); // d轴强锁
+  HAL_Delay(400);
+  rotor_zero_angle = encoder_angle; // 记录转子零点位置 (记录电机转子磁场角度为0时 编码器的角度，以后计算转子磁场角度时 减去这刻的编码器角度 再×极对数)
+  set_pwm_duty(0.0, 0.0, 0.0);
+  HAL_Delay(100);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -134,13 +152,14 @@ int main(void)
 
   struct Frame frame = {
       .tail = {0x00, 0x00, 0x80, 0x7f}};
-
-  for (int i = 0; i < 361; i++)
+  
+  for (int i = 0; i < 3600; i++)
   {
-    svpwm(deg2rad(i), 0, -0.85, &frame.fdata[0], &frame.fdata[1], &frame.fdata[2]);
+    svpwm(deg2rad(i), 0.6, 0.6, &frame.fdata[0], &frame.fdata[1], &frame.fdata[2]);
     HAL_UART_Transmit_DMA(&huart1, (uint8_t *)&frame, sizeof(struct Frame));
-    HAL_Delay(2);
+    // HAL_Delay(2);
   }
+
 
   while (1)
   {
@@ -152,9 +171,9 @@ int main(void)
 }
 
 /**
- * @brief System Clock Configuration
- * @retval None
- */
+  * @brief System Clock Configuration
+  * @retval None
+  */
 void SystemClock_Config(void)
 {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
@@ -162,8 +181,8 @@ void SystemClock_Config(void)
   RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
 
   /** Initializes the RCC Oscillators according to the specified parameters
-   * in the RCC_OscInitTypeDef structure.
-   */
+  * in the RCC_OscInitTypeDef structure.
+  */
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
   RCC_OscInitStruct.HSEPredivValue = RCC_HSE_PREDIV_DIV1;
@@ -177,8 +196,9 @@ void SystemClock_Config(void)
   }
 
   /** Initializes the CPU, AHB and APB buses clocks
-   */
-  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
+  */
+  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
+                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
@@ -201,9 +221,9 @@ void SystemClock_Config(void)
 /* USER CODE END 4 */
 
 /**
- * @brief  This function is executed in case of error occurrence.
- * @retval None
- */
+  * @brief  This function is executed in case of error occurrence.
+  * @retval None
+  */
 void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
@@ -216,12 +236,12 @@ void Error_Handler(void)
 }
 #ifdef USE_FULL_ASSERT
 /**
- * @brief  Reports the name of the source file and the source line number
- *         where the assert_param error has occurred.
- * @param  file: pointer to the source file name
- * @param  line: assert_param error line source number
- * @retval None
- */
+  * @brief  Reports the name of the source file and the source line number
+  *         where the assert_param error has occurred.
+  * @param  file: pointer to the source file name
+  * @param  line: assert_param error line source number
+  * @retval None
+  */
 void assert_failed(uint8_t *file, uint32_t line)
 {
   /* USER CODE BEGIN 6 */
