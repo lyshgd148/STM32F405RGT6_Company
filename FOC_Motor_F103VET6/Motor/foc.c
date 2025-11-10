@@ -58,8 +58,8 @@ void svpwm(float phi, float d, float q, float *d_u, float *d_v, float *d_w)
     float magnitude = sqrtf(d * d + q * q);
     if (magnitude > 0.85f)
     {
-        d /= magnitude;
-        q /= magnitude;
+        d = d / magnitude * 0.85f;
+        q = q / magnitude * 0.85f;
     }
 
     const int v[6][3] = {{1, 0, 0}, {1, 1, 0}, {0, 1, 0}, {0, 1, 1}, {0, 0, 1}, {1, 0, 1}};

@@ -152,14 +152,19 @@ int main(void)
 
   struct Frame frame = {
       .tail = {0x00, 0x00, 0x80, 0x7f}};
-  
-  for (int i = 0; i < 3600; i++)
-  {
-    svpwm(deg2rad(i), 0.6, 0.6, &frame.fdata[0], &frame.fdata[1], &frame.fdata[2]);
-    HAL_UART_Transmit_DMA(&huart1, (uint8_t *)&frame, sizeof(struct Frame));
-    // HAL_Delay(2);
-  }
 
+  // CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk; // 允许DWT访问
+  // DWT->CYCCNT = 0;                                // 清零
+  // DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;            // ✅ 启动计数器
+
+  // uint32_t start = DWT->CYCCNT;
+  // for (int i = 0; i < 3600; i++)
+  // {
+  //   svpwm(deg2rad(i), 0.6, 0.6, &frame.fdata[0], &frame.fdata[1], &frame.fdata[2]);
+  // }
+  // uint32_t elapsed = DWT->CYCCNT - start;
+  // float time_us = elapsed / (SystemCoreClock / 1e6f)/3600.0f;
+  // printf("Time taken for 36000 svpwm calls: %f us\r\n", time_us);
 
   while (1)
   {
