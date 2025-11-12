@@ -33,7 +33,7 @@
 #include "usart.h"
 struct Frame
 {
-  float data[5];
+  float data[7];
   unsigned char tail[4];
 };
 
@@ -119,7 +119,8 @@ void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef *hadc)
       frame.data[2] = motor_i_u;
       frame.data[3] = -(motor_i_u + motor_i_w);
       frame.data[4] = motor_i_w;
-       
+      frame.data[5] = motor_i_d;
+      frame.data[6] = motor_i_q;
 
       HAL_UART_Transmit_DMA(&huart1, (uint8_t *)&frame, sizeof(frame));
     }

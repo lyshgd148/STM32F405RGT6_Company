@@ -10,12 +10,6 @@
 #define deg2rad(a) (PI * (a) / 180)
 #define rad2deg(a) (180 * (a) / PI)
 
-motor_control_context_t motor_control_context;
-static arm_pid_instance_f32 pid_position;
-static arm_pid_instance_f32 pid_speed;
-static arm_pid_instance_f32 pid_torque_d;
-static arm_pid_instance_f32 pid_torque_q;
-
 static void svpwm(float phi, float d, float q, float *d_u, float *d_v, float *d_w)
 {
     float amplitude = sqrtf(d * d + q * q);
@@ -74,6 +68,11 @@ float cycle_diff(float diff, float cycle)
     return diff;
 }
 
+motor_control_context_t motor_control_context;
+static arm_pid_instance_f32 pid_position;
+static arm_pid_instance_f32 pid_speed;
+static arm_pid_instance_f32 pid_torque_d;
+static arm_pid_instance_f32 pid_torque_q;
 void set_motor_pid(
     float position_p, float position_i, float position_d,
     float speed_p, float speed_i, float speed_d,
@@ -103,66 +102,46 @@ void set_motor_pid(
 
 static float position_loop(float rad)
 {
-    // float diff = cycle_diff(rad - motor_logic_angle, position_cycle);
-    // return arm_pid_f32(&pid_position, diff);
-    return arm_pid_f32(&pid_position, cycle_diff(rad - motor_logic_angle, position_cycle));
+    float diff = cycle_diff(rad - motor_logic_angle, position_cycle);
+    return arm_pid_f32(&pid_position, diff);
 }
 void lib_position_control(float rad)
 {
-    // float d = 0;
-    // float q = position_loop(rad);
-    // foc_forward(d, q, rotor_logic_angle);
-    foc_forward(0, position_loop(rad), rotor_logic_angle);
+    float d = 0;
+    float q = position_loop(rad);
+    foc_forward(d, q, rotor_logic_angle);
 }
 
 static float speed_loop(float speed_rad)
 {
-    // float diff = speed_rad - motor_speed;
-    // return arm_pid_f32(&pid_speed, diff);
-    return arm_pid_f32(&pid_speed, speed_rad - motor_speed);
+    float diff = speed_rad - motor_speed;
+    return arm_pid_f32(&pid_speed, diff);
 }
 void lib_speed_control(float speed)
 {
-    // float d = 0;
-    // float q = speed_loop(speed);
-    // foc_forward(d, q, rotor_logic_angle);
-    foc_forward(0, speed_loop(speed), rotor_logic_angle);
+    float d = 0;
+    float q = speed_loop(speed);
+    foc_forward(d, q, rotor_logic_angle);
 }
 
 float diff_d;
-float out_unlimited_d;
-float out_limited_d;
-float Kt = 0.7f;
-float error_integral_windup_d;
 static float torque_d_loop(float d)
 {
     diff_d = d - motor_i_d / MAX_CURRENT;
-    out_unlimited = arm_pid_f32(&pid_torque_d, diff_d);
-    out_limited_d = min(out_unlimited, 0.9);
-    out_limited = max(out_unlimited, -0.9);
-    error_integral_windup_d = out_limited - out_unlimited;
-    pid_torque_d.state[0] -= (pid_torque_d.Ki * Kt * error_integral_windup_d);
-    return out_limited
+    return arm_pid_f32(&pid_torque_d, diff_d);
 }
-
 float diff_q;
-float out_unlimited;
-float out_limited;
-float Kt = 0.7f;
-float error_integral_windup_d;
 static float torque_q_loop(float q)
 {
-    diff_q = d - motor_i_d / MAX_CURRENT;
-    out_unlimited = arm_pid_f32(&pid_torque_d, diff_q);
-    out_limited = min(out_unlimited, 0.9);
-    out_limited = max(out_unlimited, -0.9);
-    error_integral_windup_d = out_limited - out_unlimited;
-    pid_torque_d.state[0] -= (pid_torque_d.Ki * Kt * error_integral_windup_d);
+    diff_q = q - motor_i_q / MAX_CURRENT;
+    return arm_pid_f32(&pid_torque_q, diff_q);
 }
+float d;
+float q;
 void lib_torque_control(float torque_norm_d, float torque_norm_q)
 {
-    float d = torque_d_loop(torque_norm_d);
-    float q = torque_q_loop(torque_norm_q);
+    d = torque_d_loop(torque_norm_d);
+    q = torque_q_loop(torque_norm_q);
     foc_forward(d, q, rotor_logic_angle);
 }
 

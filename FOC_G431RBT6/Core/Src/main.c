@@ -78,9 +78,9 @@ void set_pwm_duty(float d_u, float d_v, float d_w)
 /* USER CODE END 0 */
 
 /**
-  * @brief  The application entry point.
-  * @retval int
-  */
+ * @brief  The application entry point.
+ * @retval int
+ */
 int main(void)
 {
 
@@ -162,10 +162,10 @@ int main(void)
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3);
-  set_pwm_duty(0.5, 0, 0);
-  HAL_Delay(500);
-  set_pwm_duty(0, 0, 0);
-  rotor_zero_angle = encoder_angle;
+  // set_pwm_duty(0.5, 0, 0);
+  rotor_zero_angle = 0.05; //-1.04
+  // HAL_Delay(500);
+  // set_pwm_duty(0, 0, 0);
 
   HAL_TIM_Base_Start_IT(&htim3);
   HAL_Delay(100);
@@ -176,16 +176,16 @@ int main(void)
   set_motor_pid(
       2.5, 0, 2,
       0.02, 0.001, 0,
-      0, 0, 0,
-      0, 0, 0);
-  // motor_control_context.torque_norm_d = 0;
-  // motor_control_context.torque_norm_q = 0.2;
-  // motor_control_context.type = control_type_torque;
+      0.15, 0, 0,
+      0.15, 0, 0);
+  motor_control_context.torque_norm_d = 0;
+  motor_control_context.torque_norm_q = 0.3;
+  motor_control_context.type = control_type_torque;
   // motor_control_context.speed = 10;
   // motor_control_context.type = control_type_speed;
 
-  motor_control_context.position = deg2rad(160); // 上电时的角度当作0度
-  motor_control_context.type = control_type_position;
+  // motor_control_context.position = deg2rad(160); // 上电时的角度当作0度
+  // motor_control_context.type = control_type_position;
 
   /* USER CODE END 2 */
 
@@ -201,39 +201,40 @@ int main(void)
 }
 
 /**
-  * @brief System Clock Configuration
-  * @retval None
-  */
+ * @brief System Clock Configuration
+ * @retval None
+ */
 void SystemClock_Config(void)
 {
   LL_FLASH_SetLatency(LL_FLASH_LATENCY_4);
-  while(LL_FLASH_GetLatency() != LL_FLASH_LATENCY_4)
+  while (LL_FLASH_GetLatency() != LL_FLASH_LATENCY_4)
   {
   }
   LL_PWR_EnableRange1BoostMode();
   LL_RCC_HSE_Enable();
-   /* Wait till HSE is ready */
-  while(LL_RCC_HSE_IsReady() != 1)
+  /* Wait till HSE is ready */
+  while (LL_RCC_HSE_IsReady() != 1)
   {
   }
 
   LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSE, LL_RCC_PLLM_DIV_4, 85, LL_RCC_PLLR_DIV_2);
   LL_RCC_PLL_EnableDomain_SYS();
   LL_RCC_PLL_Enable();
-   /* Wait till PLL is ready */
-  while(LL_RCC_PLL_IsReady() != 1)
+  /* Wait till PLL is ready */
+  while (LL_RCC_PLL_IsReady() != 1)
   {
   }
 
   LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_PLL);
   LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_2);
-   /* Wait till System clock is ready */
-  while(LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL)
+  /* Wait till System clock is ready */
+  while (LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL)
   {
   }
 
   /* Insure 1us transition state at intermediate medium speed clock*/
-  for (__IO uint32_t i = (170 >> 1); i !=0; i--);
+  for (__IO uint32_t i = (170 >> 1); i != 0; i--)
+    ;
 
   /* Set AHB prescaler*/
   LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
@@ -241,8 +242,8 @@ void SystemClock_Config(void)
   LL_RCC_SetAPB2Prescaler(LL_RCC_APB2_DIV_1);
   LL_SetSystemCoreClock(170000000);
 
-   /* Update the time base */
-  if (HAL_InitTick (TICK_INT_PRIORITY) != HAL_OK)
+  /* Update the time base */
+  if (HAL_InitTick(TICK_INT_PRIORITY) != HAL_OK)
   {
     Error_Handler();
   }
@@ -253,9 +254,9 @@ void SystemClock_Config(void)
 /* USER CODE END 4 */
 
 /**
-  * @brief  This function is executed in case of error occurrence.
-  * @retval None
-  */
+ * @brief  This function is executed in case of error occurrence.
+ * @retval None
+ */
 void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
@@ -268,12 +269,12 @@ void Error_Handler(void)
 }
 #ifdef USE_FULL_ASSERT
 /**
-  * @brief  Reports the name of the source file and the source line number
-  *         where the assert_param error has occurred.
-  * @param  file: pointer to the source file name
-  * @param  line: assert_param error line source number
-  * @retval None
-  */
+ * @brief  Reports the name of the source file and the source line number
+ *         where the assert_param error has occurred.
+ * @param  file: pointer to the source file name
+ * @param  line: assert_param error line source number
+ * @retval None
+ */
 void assert_failed(uint8_t *file, uint32_t line)
 {
   /* USER CODE BEGIN 6 */
