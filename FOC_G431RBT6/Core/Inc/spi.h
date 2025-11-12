@@ -32,8 +32,6 @@ extern "C" {
 
 /* USER CODE END Includes */
 
-extern SPI_HandleTypeDef hspi1;
-
 /* USER CODE BEGIN Private defines */
   extern uint8_t KTH7823_tx_data[2];
   extern uint8_t KTH7823_rx_data[2];

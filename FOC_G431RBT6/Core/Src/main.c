@@ -78,16 +78,16 @@ void set_pwm_duty(float d_u, float d_v, float d_w)
 /* USER CODE END 0 */
 
 /**
- * @brief  The application entry point.
- * @retval int
- */
+  * @brief  The application entry point.
+  * @retval int
+  */
 int main(void)
 {
 
   /* USER CODE BEGIN 1 */
   struct Frame
   {
-    float data[2];
+    float data[3];
     unsigned char tail[4];
   };
   /* USER CODE END 1 */
@@ -117,98 +117,132 @@ int main(void)
   MX_TIM1_Init();
   MX_ADC2_Init();
   /* USER CODE BEGIN 2 */
-  HAL_GPIO_WritePin(SPI1_CS_GPIO_Port, SPI1_CS_Pin, GPIO_PIN_RESET);
-  HAL_SPI_TransmitReceive_DMA(&hspi1, KTH7823_tx_data, KTH7823_rx_data, 2);
+
+  /*中断版本------------------------------------------------------------------*/
+  LL_GPIO_ResetOutputPin(SPI1_CS_GPIO_Port, SPI1_CS_Pin); // 1️⃣ 拉低 CS
+  LL_DMA_DisableChannel(DMA1, LL_DMA_CHANNEL_3);          // 2️⃣ 配置 DMA
+  LL_DMA_DisableChannel(DMA1, LL_DMA_CHANNEL_4);
+  LL_DMA_SetDataLength(DMA1, LL_DMA_CHANNEL_3, 2);
+  LL_DMA_SetDataLength(DMA1, LL_DMA_CHANNEL_4, 2);
+
+  LL_DMA_ConfigAddresses(DMA1, LL_DMA_CHANNEL_3,
+                         LL_SPI_DMA_GetRegAddr(SPI1),
+                         (uint32_t)KTH7823_rx_data,
+                         LL_DMA_DIRECTION_PERIPH_TO_MEMORY);
+
+  LL_DMA_ConfigAddresses(DMA1, LL_DMA_CHANNEL_4,
+                         (uint32_t)KTH7823_tx_data,
+                         LL_SPI_DMA_GetRegAddr(SPI1),
+                         LL_DMA_DIRECTION_MEMORY_TO_PERIPH);
+
+  LL_DMA_EnableIT_TC(DMA1, LL_DMA_CHANNEL_3);   // 打开接收中断
+  LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_3); // 使能接收通道
+  LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_4); // 使能发送通道
+
+  LL_SPI_EnableDMAReq_TX(SPI1); // 4️⃣ 启动 SPI DMA 请求
+  LL_SPI_EnableDMAReq_RX(SPI1);
+  LL_SPI_Enable(SPI1);
+  /*中断版本------------------------------------------------------------------*/
+
+  // LL_SPI_Enable(SPI1);
+  // LL_DMA_DisableChannel(DMA1, LL_DMA_CHANNEL_3);
+  // LL_DMA_DisableChannel(DMA1, LL_DMA_CHANNEL_4);
+  // LL_DMA_ConfigAddresses(DMA1, LL_DMA_CHANNEL_3,
+  //                        LL_SPI_DMA_GetRegAddr(SPI1),
+  //                        (uint32_t)KTH7823_rx_data,
+  //                        LL_DMA_DIRECTION_PERIPH_TO_MEMORY);
+  // LL_DMA_ConfigAddresses(DMA1, LL_DMA_CHANNEL_4,
+  //                        (uint32_t)KTH7823_tx_data,
+  //                        LL_SPI_DMA_GetRegAddr(SPI1),
+  //                        LL_DMA_DIRECTION_MEMORY_TO_PERIPH);
+
+  HAL_GPIO_WritePin(SD1_GPIO_Port, SD1_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(SD2_GPIO_Port, SD2_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(SD3_GPIO_Port, SD3_Pin, GPIO_PIN_SET);
+  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
+  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
+  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3);
+  set_pwm_duty(0.5, 0, 0);
+  HAL_Delay(500);
+  set_pwm_duty(0, 0, 0);
+  rotor_zero_angle = encoder_angle;
 
   HAL_TIM_Base_Start_IT(&htim3);
+  HAL_Delay(100);
 
   HAL_ADCEx_Calibration_Start(&hadc2, ADC_SINGLE_ENDED);
   HAL_ADCEx_InjectedStart_IT(&hadc2);
 
-  HAL_Delay(1500);
-
-  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
-  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
-  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3);
-
-  set_pwm_duty(0.5, 0, 0); // d轴强拖，形成SVPWM模型中的基础矢量1，即对应转子零度位置
-  HAL_Delay(1000);          // 保持一会，此时要保证电机处于供电状态
-  rotor_zero_angle = encoder_angle;
-  motor_logic_angle=0;
-  set_pwm_duty(0, 0, 0); // 松开电机
-  HAL_Delay(100);
-
   set_motor_pid(
-      0.7, 0, 0.1,
+      2.5, 0, 2,
       0.02, 0.001, 0,
-      0.02, 0.04, 0,
-      0.02, 0.04, 0);
-
+      0, 0, 0,
+      0, 0, 0);
   // motor_control_context.torque_norm_d = 0;
-  // motor_control_context.torque_norm_q = 0;
+  // motor_control_context.torque_norm_q = 0.2;
   // motor_control_context.type = control_type_torque;
+  // motor_control_context.speed = 10;
+  // motor_control_context.type = control_type_speed;
 
-  motor_control_context.position = deg2rad(90); // 上电时的角度当作0度
+  motor_control_context.position = deg2rad(160); // 上电时的角度当作0度
   motor_control_context.type = control_type_position;
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-
-  struct Frame frame = {.tail = {0x00, 0x00, 0x80, 0x7f}};
   while (1)
   {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    // frame.data[0] = encoder_angle;
-    // frame.data[1] = rotor_logic_angle;
-    // HAL_UART_Transmit_DMA(&huart1, (uint8_t *)&frame, sizeof(frame));
-    HAL_Delay(20);
   }
   /* USER CODE END 3 */
 }
 
 /**
- * @brief System Clock Configuration
- * @retval None
- */
+  * @brief System Clock Configuration
+  * @retval None
+  */
 void SystemClock_Config(void)
 {
-  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
-  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
-
-  /** Configure the main internal regulator output voltage
-   */
-  HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1_BOOST);
-
-  /** Initializes the RCC Oscillators according to the specified parameters
-   * in the RCC_OscInitTypeDef structure.
-   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
-  RCC_OscInitStruct.HSEState = RCC_HSE_ON;
-  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
-  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
-  RCC_OscInitStruct.PLL.PLLM = RCC_PLLM_DIV4;
-  RCC_OscInitStruct.PLL.PLLN = 85;
-  RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
-  RCC_OscInitStruct.PLL.PLLQ = RCC_PLLQ_DIV2;
-  RCC_OscInitStruct.PLL.PLLR = RCC_PLLR_DIV2;
-  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+  LL_FLASH_SetLatency(LL_FLASH_LATENCY_4);
+  while(LL_FLASH_GetLatency() != LL_FLASH_LATENCY_4)
   {
-    Error_Handler();
+  }
+  LL_PWR_EnableRange1BoostMode();
+  LL_RCC_HSE_Enable();
+   /* Wait till HSE is ready */
+  while(LL_RCC_HSE_IsReady() != 1)
+  {
   }
 
-  /** Initializes the CPU, AHB and APB buses clocks
-   */
-  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
-  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
-  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
-  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+  LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSE, LL_RCC_PLLM_DIV_4, 85, LL_RCC_PLLR_DIV_2);
+  LL_RCC_PLL_EnableDomain_SYS();
+  LL_RCC_PLL_Enable();
+   /* Wait till PLL is ready */
+  while(LL_RCC_PLL_IsReady() != 1)
+  {
+  }
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_4) != HAL_OK)
+  LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_PLL);
+  LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_2);
+   /* Wait till System clock is ready */
+  while(LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL)
+  {
+  }
+
+  /* Insure 1us transition state at intermediate medium speed clock*/
+  for (__IO uint32_t i = (170 >> 1); i !=0; i--);
+
+  /* Set AHB prescaler*/
+  LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
+  LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
+  LL_RCC_SetAPB2Prescaler(LL_RCC_APB2_DIV_1);
+  LL_SetSystemCoreClock(170000000);
+
+   /* Update the time base */
+  if (HAL_InitTick (TICK_INT_PRIORITY) != HAL_OK)
   {
     Error_Handler();
   }
@@ -219,9 +253,9 @@ void SystemClock_Config(void)
 /* USER CODE END 4 */
 
 /**
- * @brief  This function is executed in case of error occurrence.
- * @retval None
- */
+  * @brief  This function is executed in case of error occurrence.
+  * @retval None
+  */
 void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
@@ -234,12 +268,12 @@ void Error_Handler(void)
 }
 #ifdef USE_FULL_ASSERT
 /**
- * @brief  Reports the name of the source file and the source line number
- *         where the assert_param error has occurred.
- * @param  file: pointer to the source file name
- * @param  line: assert_param error line source number
- * @retval None
- */
+  * @brief  Reports the name of the source file and the source line number
+  *         where the assert_param error has occurred.
+  * @param  file: pointer to the source file name
+  * @param  line: assert_param error line source number
+  * @retval None
+  */
 void assert_failed(uint8_t *file, uint32_t line)
 {
   /* USER CODE BEGIN 6 */

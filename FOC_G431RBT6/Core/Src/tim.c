@@ -27,27 +27,32 @@
 #include "foc.h"
 #include "filter.h"
 #include "arm_math.h"
-#include "adc.h"
+
+float diff_angle;
+float encoder_angle_last = 0;
+float _motor_speed;
+uint8_t once = 1;
+float fliter_alpha_speed = 0.07;
+
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
   if (htim->Instance == TIM3)
   {
-    static float encoder_angle_last = 0;
-    static uint8_t once = 1;
+    encoder_angle = 2.0f * angle_raw / (1 << 16) * PI;
 
     if (once)
     {
       once = 0;
       encoder_angle_last = encoder_angle;
-      // rotor_zero_angle = encoder_angle;
     }
 
-    float diff_angle = cycle_diff(encoder_angle - encoder_angle_last, 2 * PI);
+    diff_angle = cycle_diff(encoder_angle - encoder_angle_last, 2 * PI);
+    motor_logic_angle = cycle_diff(motor_logic_angle + diff_angle, position_cycle);
+
+    diff_angle = cycle_diff(encoder_angle - encoder_angle_last, 2 * PI);
     encoder_angle_last = encoder_angle;
-    float _motor_speed = diff_angle * motor_speed_calc_freq;
-    float fliter_alpha_speed = 0.1;
+    _motor_speed = diff_angle * motor_speed_calc_freq;
     motor_speed = LFP(_motor_speed, motor_speed, fliter_alpha_speed);
-    HAL_ADC_Start_DMA(&hadc2, (uint32_t *)&Knob_buf, 1);
   }
 }
 /* USER CODE END 0 */
@@ -76,7 +81,7 @@ void MX_TIM1_Init(void)
   htim1.Init.CounterMode = TIM_COUNTERMODE_CENTERALIGNED3;
   htim1.Init.Period = 4250;
   htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
-  htim1.Init.RepetitionCounter = 5;
+  htim1.Init.RepetitionCounter = 1;
   htim1.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
   if (HAL_TIM_Base_Init(&htim1) != HAL_OK)
   {

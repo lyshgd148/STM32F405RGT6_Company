@@ -22,6 +22,18 @@ typedef struct
 
 extern motor_control_context_t motor_control_context;
 
+
+
+
+
+
+
+
+
+
+
+
+
 void foc_forward(float d, float q, float rotor_rad);
 float cycle_diff(float diff, float cycle);
 
@@ -35,3 +47,5 @@ void set_motor_pid(
     float speed_p, float speed_i, float speed_d,
     float torque_d_p, float torque_d_i, float torque_d_d,
     float torque_q_p, float torque_q_i, float torque_q_d);
+
+

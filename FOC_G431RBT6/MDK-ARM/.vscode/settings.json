@@ -1,5 +1,8 @@
 {
     "files.associations": {
-        "main.h": "c"
+        "main.h": "c",
+        "spi.h": "c",
+        "foc.h": "c",
+        "global_def.h": "c"
     }
 }
